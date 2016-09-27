@@ -1,0 +1,33 @@
+package modelo
+
+import (
+	"time"
+
+	"gopkg.in/mgo.v2/bson"
+)
+
+type Solicitud struct {
+	SolicitudId     bson.ObjectId `json:"solicitudID" bson:"_id"`
+	UsuarioId       int           `json:"usuarioID" bson:"usuarioID"`
+	Fecha           time.Time     `json:"fechaCreacion" bson:"fecha"`
+	Vigente         bool          `json:"estaVigente" bson:"estaVigente"`
+	CantidadDadores int           `json:"cantidadDadores" bson:"cantidadDadores"`
+	NombrePaciente  string        `json:"nombrePaciente" bson:"nombrePaciente"`
+	Institucion     string        `json:"institucion" bson:"institucion"`
+	Direccion       string        `json:"direccion" bson:"direccion"`
+	HoraDesde       string        `json:"horaDesde" bson:"horaDesde"`
+	HoraHasta       string        `json:"horaHasta" bson:"horaHasta"`
+	Adicionales     string        `json:"datosAdicionales" bson:"datosAdicionales"`
+	//Provincia Provincia
+	//Ciudad Ciudad
+	//GrupoSanguineo GrupoSanguineo
+	//Factor Factor
+}
+type Solicitudes []Solicitud
+
+func NewSolicitud(nombre, institucion string) *Solicitud {
+	s := new(Solicitud)
+	s.NombrePaciente = nombre
+	s.Institucion = institucion
+	return s
+}

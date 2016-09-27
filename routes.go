@@ -25,6 +25,12 @@ func GetRutas(controller *Controller) Rutas {
 			controller.SolicitudIndex,
 		},
 		Ruta{
+			"SolicitudCreate",
+			"POST",
+			"/solicitud",
+			controller.SolicitudCreate,
+		},
+		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
