@@ -1,6 +1,10 @@
-package main
+package router
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/flioh/DonemosApi/controlador"
+)
 
 type Ruta struct {
 	Nombre  string
@@ -10,31 +14,31 @@ type Ruta struct {
 }
 type Rutas []Ruta
 
-func GetRutas(controller *Controller) Rutas {
+func GetRutas(solicitudController *controlador.Solicitud) Rutas {
 	return Rutas{
 		Ruta{
 			"Index",
 			"GET",
 			"/",
-			Index,
+			solicitudController.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudIndex",
 			"GET",
 			"/solicitud",
-			controller.SolicitudIndex,
+			solicitudController.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudCreate",
 			"POST",
 			"/solicitud",
-			controller.SolicitudCreate,
+			solicitudController.SolicitudCreate,
 		},
 		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
-			SolicitudShow,
+			solicitudController.SolicitudShow,
 		},
 	}
 }

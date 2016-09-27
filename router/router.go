@@ -1,17 +1,19 @@
-package main
+package router
 
 import (
 	"net/http"
 
+	"github.com/flioh/DonemosApi/controlador"
+	"github.com/flioh/DonemosApi/helper"
 	"github.com/gorilla/mux"
 )
 
-func NewRouter(controller *Controller) *mux.Router {
+func New(controller *controlador.Solicitud) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 
 	for _, ruta := range GetRutas(controller) {
 		var handler http.Handler
-		handler = Logger(ruta.Handler, ruta.Nombre)
+		handler = helper.Logger(ruta.Handler, ruta.Nombre)
 
 		router.
 			Methods(ruta.Metodo).
