@@ -101,3 +101,16 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 }
+
+func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["solicitudId"]
+
+	err := c.db.Delete(id)
+	if err != nil {
+		w.WriteHeader(204)
+		return
+	}
+
+	w.WriteHeader(200)
+}

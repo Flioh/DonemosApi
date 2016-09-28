@@ -48,5 +48,9 @@ func (s *Solicitudes) Read(hexId string) (solicitud modelo.Solicitud, err error)
 func (s *Solicitudes) Update(hexId string, solicitud modelo.Solicitud) error {
 	id := bson.ObjectIdHex(hexId)
 	solicitud.SolicitudId = id
-	return s.colección().UpdateId(bson.ObjectIdHex(hexId), solicitud)
+	return s.colección().UpdateId(id, solicitud)
+}
+
+func (s *Solicitudes) Delete(hexId string) error {
+	return s.colección().RemoveId(bson.ObjectIdHex(hexId))
 }
