@@ -26,6 +26,7 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 
 	solicitudes, _ := c.db.Todos()
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
