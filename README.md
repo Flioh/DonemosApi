@@ -6,8 +6,6 @@ Back-end para la app Donemos.
 
 1. Cloná
 
-2. `go install`
+2. Ejecutá `mongod`
 
-3. Ejecutá `mongod`
-
-4. Usá [Gin](https://github.com/codegangsta/gin) para live-reload.
+3. Usá [Gin](https://github.com/codegangsta/gin) para live-reload.
