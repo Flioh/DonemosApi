@@ -15,10 +15,10 @@ import (
 // Solicitud es el controlador de solicitudes, contiene referencia a la sesion de mongodb
 // y contiene los handlers relacionados a las solicitudes.
 type Solicitud struct {
-	db *db.Solicitudes
+	db db.IColección
 }
 
-func NewSolicitud(db *db.Solicitudes) *Solicitud {
+func NewSolicitud(db db.IColección) *Solicitud {
 	return &Solicitud{db}
 }
 
@@ -29,7 +29,7 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(solicitudes); err != nil {
+	if err := json.NewEncoder(w).Encode(solicitudes.(modelo.Solicitudes)); err != nil {
 		panic(err)
 	}
 
@@ -56,7 +56,7 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
-	s := modelo.Solicitud{}
+	s := new(modelo.Solicitud)
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
@@ -82,7 +82,7 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["solicitudId"]
 
-	var nuevaSolicitud modelo.Solicitud
+	nuevaSolicitud := new(modelo.Solicitud)
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {

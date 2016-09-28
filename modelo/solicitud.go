@@ -31,3 +31,15 @@ func NewSolicitud(nombre, institucion string) *Solicitud {
 	s.Institucion = institucion
 	return s
 }
+
+func (s *Solicitud) GetId() bson.ObjectId {
+	return s.SolicitudId
+}
+
+func (s *Solicitud) SetIdHex(hex string) {
+	s.SolicitudId = bson.ObjectIdHex(hex)
+}
+
+func (s *Solicitud) SetId(id bson.ObjectId) {
+	s.SolicitudId = id
+}
