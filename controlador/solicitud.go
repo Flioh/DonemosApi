@@ -88,7 +88,6 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	r.Body.Close()
 
 	if err := json.Unmarshal(body, &nuevaSolicitud); err != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -97,9 +96,15 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 
 	err = c.db.Update(id, nuevaSolicitud)
 	if err != nil {
-		panic(err)
+		w.WriteHeader(404) //TODO: Probablemente el código apropiado sea otro.
+		return
 	}
+	r.Body.Close()
+
+	sj, _ := json.Marshal(nuevaSolicitud)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s", sj)
 }
 
 func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
@@ -112,5 +117,5 @@ func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(202)
 }
