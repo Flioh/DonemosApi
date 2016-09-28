@@ -33,7 +33,8 @@ func (s *Solicitudes) Todos() (interface{}, error) {
 }
 
 func (s *Solicitudes) Create(solicitud modelo.IModelo) error {
-	solicitud.SetId(bson.NewObjectId())
+	id := bson.NewObjectId()
+	solicitud.SetId(id)
 	err := s.colección().Insert(solicitud)
 
 	return err

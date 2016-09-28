@@ -18,10 +18,10 @@ type Solicitud struct {
 	HoraDesde       string          `json:"horaDesde" bson:"horaDesde"`
 	HoraHasta       string          `json:"horaHasta" bson:"horaHasta"`
 	Adicionales     string          `json:"datosAdicionales" bson:"datosAdicionales"`
-	Provincia       Provincia       `json:"provincia" bson:"provincia"`
-	Ciudad          Localidad       `json:"ciudad" bson:"ciudad"`
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
+	provinciaId     bson.ObjectId
+	ciudadId        bson.ObjectId
 }
 type Solicitudes []Solicitud
 
@@ -42,4 +42,15 @@ func (s *Solicitud) SetIdHex(hex string) {
 
 func (s *Solicitud) SetId(id bson.ObjectId) {
 	s.SolicitudId = id
+	// TODO: TEMP: These Ids will be set from the received body
+	s.provinciaId = bson.NewObjectId()
+	s.ciudadId = bson.NewObjectId()
+
 }
+
+// func (s *Solicitud) MarshalJSON() ([]byte, error) {
+// 	type Alias Solicitud
+// 	return json.Marshal(&struct{
+// 		Provincia bson.ObjectId `json:""`
+// 	})
+// }

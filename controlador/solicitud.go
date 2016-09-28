@@ -57,6 +57,7 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	s := new(modelo.Solicitud)
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
@@ -67,10 +68,14 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 
 	if err := json.Unmarshal(body, &s); err != nil {
 		w.Header().Set("Content-Type", "application/json")
+		fmt.Println("error: ", err)
 		w.WriteHeader(422)
+		return
 	}
 
-	c.db.Create(s)
+	if err := c.db.Create(s); err != nil {
+		fmt.Println("error: ", err)
+	}
 
 	sj, _ := json.Marshal(s)
 
