@@ -40,5 +40,11 @@ func GetRutas(solicitudController *controlador.Solicitud) Rutas {
 			"/solicitud/{solicitudId}",
 			solicitudController.SolicitudShow,
 		},
+		Ruta{
+			"SolicitudUpdate",
+			"PUT",
+			"/solicitud/{solicitudId}",
+			solicitudController.SolicitudUpdate,
+		},
 	}
 }

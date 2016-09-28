@@ -8,12 +8,14 @@ import (
 	"gopkg.in/mgo.v2"
 
 	"github.com/flioh/DonemosApi/controlador"
+	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/router"
 )
 
 func main() {
 	fmt.Println("Iniciando servidor en puerto 8080")
-	controller := controlador.NewSolicitud(getSession())
+	sesión := getSession()
+	controller := controlador.NewSolicitud(db.NewSolicitudes(sesión))
 	router := router.New(controller)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
