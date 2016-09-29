@@ -17,7 +17,8 @@ func main() {
 	sesión := getSession()
 	controladorSolicitudes := controlador.NewSolicitud(db.NewDatabase(sesión, "solicitudes"))
 	controladorProvincias := controlador.NewProvincia(db.NewDatabase(sesión, "provincias"))
-	router := router.New(controladorSolicitudes, controladorProvincias)
+	controladorLocalidades := controlador.NewLocalidad(db.NewDatabase(sesión, "localidades"))
+	router := router.New(controladorSolicitudes, controladorProvincias, controladorLocalidades)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 

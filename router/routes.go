@@ -14,7 +14,7 @@ type Ruta struct {
 }
 type Rutas []Ruta
 
-func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia) Rutas {
+func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controlador.Localidad) Rutas {
 	return Rutas{
 		Ruta{
 			"Index",
@@ -58,6 +58,13 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia) Rutas {
 			"GET",
 			"/provincia",
 			cp.ProvinciaIndex,
+		},
+
+		Ruta{
+			"LocalidadIndex",
+			"GET",
+			"/localidad",
+			cl.LocalidadIndex,
 		},
 	}
 }

@@ -3,11 +3,12 @@ package modelo
 import "gopkg.in/mgo.v2/bson"
 
 type Localidad struct {
-	Id          bson.ObjectId `json:"id"`
-	ProvinciaId bson.ObjectId `json:"provinciaId"`
-	Nombre      string        `json:"nombre"`
+	Id     bson.ObjectId `json:"id" bson:"_id"`
+	Nombre string        `json:"nombre" bson:"nombre"`
 }
 
-func NewLocalidad(nombre string, provinciaId bson.ObjectId) *Localidad {
-	return &Localidad{bson.NewObjectId(), provinciaId, nombre}
+type Localidades []Localidad
+
+func NewLocalidad(nombre string, localidadId bson.ObjectId) *Localidad {
+	return &Localidad{bson.NewObjectId(), nombre}
 }
