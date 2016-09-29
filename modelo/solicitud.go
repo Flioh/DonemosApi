@@ -22,7 +22,7 @@ type Solicitud struct {
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
 	ProvinciaId     bson.ObjectId   `bson: "provinciaId"`
-	CiudadId        bson.ObjectId   `bson:"provinciaId"`
+	CiudadId        bson.ObjectId   `bson:"ciudadId"`
 }
 type Solicitudes []Solicitud
 

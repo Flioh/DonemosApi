@@ -67,7 +67,7 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 	}
 	r.Body.Close()
 
-	if err := s.UnmarshalJSON(body); err != nil {
+	if err := json.Unmarshal(body, s); err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Println("error: ", err)
 		w.WriteHeader(422)
