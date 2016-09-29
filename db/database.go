@@ -15,6 +15,10 @@ func NewDatabase(sesión *mgo.Session, n string) *Database {
 	return &Database{sesión, n}
 }
 
+func (db *Database) GetMongoDB() *mgo.Database {
+	return db.sesión.DB("donemos")
+}
+
 func (db *Database) Colección() *mgo.Collection {
 	return db.sesión.DB("donemos").C(db.nombreColección)
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -23,6 +24,8 @@ type Solicitud struct {
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
 	ProvinciaId     bson.ObjectId   `bson: "provinciaId"`
 	CiudadId        bson.ObjectId   `bson:"ciudadId"`
+
+	db *mgo.Database
 }
 type Solicitudes []Solicitud
 
@@ -45,12 +48,30 @@ func (s *Solicitud) SetId(id bson.ObjectId) {
 	s.SolicitudId = id
 }
 
-// func (s *Solicitud) MarshalJSON() ([]byte, error) {
-// 	type Alias Solicitud
-// 	return json.Marshal(&struct{
-// 		Provincia bson.ObjectId `json:""`
-// 	})
-// }
+func (s Solicitudes) PrepararParaEncode(db *mgo.Database) (nuevas Solicitudes) {
+	for _, elem := range s {
+		elem.db = db
+		nuevas = append(nuevas, elem)
+	}
+	return
+}
+
+func (s *Solicitud) MarshalJSON() ([]byte, error) {
+	type Alias Solicitud
+	var ciudad Localidad
+	var provincia Provincia
+	s.db.C("provincias").FindId(s.ProvinciaId).One(&provincia)
+	s.db.C("localidades").FindId(s.CiudadId).One(&ciudad)
+	return json.Marshal(&struct {
+		Provincia Provincia `json:"provincia"`
+		Localidad Localidad `json:"ciudad"`
+		*Alias
+	}{
+		Alias:     (*Alias)(s),
+		Localidad: ciudad,
+		Provincia: provincia,
+	})
+}
 
 func (s *Solicitud) UnmarshalJSON(data []byte) error {
 	type Alias Solicitud

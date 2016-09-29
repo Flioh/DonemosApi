@@ -31,7 +31,8 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(solicitudes); err != nil {
+	encodables := solicitudes.PrepararParaEncode(c.db.GetMongoDB())
+	if err := json.NewEncoder(w).Encode(encodables); err != nil {
 		panic(err)
 	}
 
