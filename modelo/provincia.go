@@ -7,6 +7,8 @@ type Provincia struct {
 	Nombre string        `json:"nombre"`
 }
 
+type Provincias []Provincia
+
 func NewProvincia(nombre string) *Provincia {
 	return &Provincia{bson.NewObjectId(), nombre}
 }

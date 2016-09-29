@@ -15,22 +15,23 @@ import (
 // Solicitud es el controlador de solicitudes, contiene referencia a la sesion de mongodb
 // y contiene los handlers relacionados a las solicitudes.
 type Solicitud struct {
-	db db.IColección
+	db *db.Database
 }
 
-func NewSolicitud(db db.IColección) *Solicitud {
+func NewSolicitud(db *db.Database) *Solicitud {
 	return &Solicitud{db}
 }
 
 func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 
-	solicitudes, _ := c.db.Todos()
+	var solicitudes modelo.Solicitudes
+	c.db.Todos().All(&solicitudes)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(solicitudes.(modelo.Solicitudes)); err != nil {
+	if err := json.NewEncoder(w).Encode(solicitudes); err != nil {
 		panic(err)
 	}
 

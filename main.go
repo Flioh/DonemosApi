@@ -15,7 +15,7 @@ import (
 func main() {
 	fmt.Println("Iniciando servidor en puerto 8080")
 	sesión := getSession()
-	controller := controlador.NewSolicitud(db.NewSolicitudes(sesión))
+	controller := controlador.NewSolicitud(db.NewDatabase(sesión, "solicitudes"))
 	router := router.New(controller)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
