@@ -42,10 +42,6 @@ func (s *Solicitud) SetIdHex(hex string) {
 
 func (s *Solicitud) SetId(id bson.ObjectId) {
 	s.SolicitudId = id
-	// TODO: TEMP: These Ids will be set from the received body
-	s.provinciaId = bson.NewObjectId()
-	s.ciudadId = bson.NewObjectId()
-
 }
 
 // func (s *Solicitud) MarshalJSON() ([]byte, error) {

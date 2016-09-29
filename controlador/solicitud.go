@@ -25,7 +25,7 @@ func NewSolicitud(db *db.Database) *Solicitud {
 func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 
 	var solicitudes modelo.Solicitudes
-	c.db.Todos().All(&solicitudes)
+	c.db.Todos(20).All(&solicitudes)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
