@@ -63,7 +63,7 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 		Ruta{
 			"LocalidadIndex",
 			"GET",
-			"/localidad",
+			"/localidad/{provinciaId}",
 			cl.LocalidadIndex,
 		},
 	}

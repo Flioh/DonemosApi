@@ -4,7 +4,7 @@ import "gopkg.in/mgo.v2/bson"
 
 type Localidad struct {
 	Id          bson.ObjectId `json:"id" bson:"_id"`
-	ProvinciaId bson.ObjectId `json:"provincia" bson:"provincia"`
+	ProvinciaId bson.ObjectId `json:"provincia" bson:"provinciaId"`
 	Nombre      string        `json:"nombre" bson:"nombre"`
 }
 
