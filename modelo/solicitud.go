@@ -1,6 +1,7 @@
 package modelo
 
 import (
+	"encoding/json"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -20,8 +21,8 @@ type Solicitud struct {
 	Adicionales     string          `json:"datosAdicionales" bson:"datosAdicionales"`
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
-	provinciaId     bson.ObjectId
-	ciudadId        bson.ObjectId
+	ProvinciaId     bson.ObjectId   `bson: "provinciaId"`
+	CiudadId        bson.ObjectId   `bson:"provinciaId"`
 }
 type Solicitudes []Solicitud
 
@@ -50,3 +51,20 @@ func (s *Solicitud) SetId(id bson.ObjectId) {
 // 		Provincia bson.ObjectId `json:""`
 // 	})
 // }
+
+func (s *Solicitud) UnmarshalJSON(data []byte) error {
+	type Alias Solicitud
+	aux := &struct {
+		Provincia Provincia `json:"provincia"`
+		Localidad Localidad `json:"ciudad"`
+		*Alias
+	}{
+		Alias: (*Alias)(s),
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	s.ProvinciaId = aux.Provincia.Id
+	s.CiudadId = aux.Localidad.Id
+	return nil
+}
