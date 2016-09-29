@@ -8,10 +8,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func New(controller *controlador.Solicitud) *mux.Router {
+func New(controladorSolicitud *controlador.Solicitud,
+	controladorProvincia *controlador.Provincia) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 
-	for _, ruta := range GetRutas(controller) {
+	for _, ruta := range GetRutas(controladorSolicitud, controladorProvincia) {
 		var handler http.Handler
 		handler = helper.Logger(ruta.Handler, ruta.Nombre)
 

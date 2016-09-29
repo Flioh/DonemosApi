@@ -14,43 +14,50 @@ type Ruta struct {
 }
 type Rutas []Ruta
 
-func GetRutas(solicitudController *controlador.Solicitud) Rutas {
+func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia) Rutas {
 	return Rutas{
 		Ruta{
 			"Index",
 			"GET",
 			"/",
-			solicitudController.SolicitudIndex,
+			cs.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudIndex",
 			"GET",
 			"/solicitud",
-			solicitudController.SolicitudIndex,
+			cs.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudCreate",
 			"POST",
 			"/solicitud",
-			solicitudController.SolicitudCreate,
+			cs.SolicitudCreate,
 		},
 		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
-			solicitudController.SolicitudShow,
+			cs.SolicitudShow,
 		},
 		Ruta{
 			"SolicitudUpdate",
 			"PUT",
 			"/solicitud/{solicitudId}",
-			solicitudController.SolicitudUpdate,
+			cs.SolicitudUpdate,
 		},
 		Ruta{
 			"SolicitudDelete",
 			"DELETE",
 			"/solicitud/{solicitudId}",
-			solicitudController.SolicitudDelete,
+			cs.SolicitudDelete,
+		},
+
+		Ruta{
+			"ProvinciaIndex",
+			"GET",
+			"/provincia",
+			cp.ProvinciaIndex,
 		},
 	}
 }

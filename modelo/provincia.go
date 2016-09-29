@@ -3,8 +3,8 @@ package modelo
 import "gopkg.in/mgo.v2/bson"
 
 type Provincia struct {
-	Id     bson.ObjectId `json:"id"`
-	Nombre string        `json:"nombre"`
+	Id     bson.ObjectId `json:"id" bson:"_id"`
+	Nombre string        `json:"nombre" bson:"nombre"`
 }
 
 type Provincias []Provincia
