@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"gopkg.in/mgo.v2/bson"
+
 	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/modelo"
 	"github.com/gorilla/mux"
@@ -23,9 +25,22 @@ func NewSolicitud(db *db.Database) *Solicitud {
 }
 
 func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	provinciaId := vars["provinciaId"]
+	localidadId := vars["localidadId"]
+	grupoId := vars["grupoId"]
+	factorId := vars["factorId"]
 
 	var solicitudes modelo.Solicitudes
-	c.db.Todos(20).All(&solicitudes)
+	query := bson.M{
+		"provinciaId":        provinciaId,
+		"localidadId":        localidadId,
+		"grupoSanguineo.id":  grupoId,
+		"factorSanguineo.id": factorId,
+	}
+
+	c.db.Find(20, query).All(&solicitudes)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

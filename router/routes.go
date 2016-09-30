@@ -19,13 +19,13 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 		Ruta{
 			"Index",
 			"GET",
-			"/",
+			"/solicitud",
 			cs.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudIndex",
 			"GET",
-			"/solicitud",
+			"/solicitud/filtrar/{provinciaId}/{localidadId}/{grupoId}/{factorId}",
 			cs.SolicitudIndex,
 		},
 		Ruta{

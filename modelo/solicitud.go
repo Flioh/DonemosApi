@@ -2,6 +2,7 @@ package modelo
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	mgo "gopkg.in/mgo.v2"
@@ -23,7 +24,7 @@ type Solicitud struct {
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
 	ProvinciaId     bson.ObjectId   `bson: "provinciaId"`
-	CiudadId        bson.ObjectId   `bson:"ciudadId"`
+	CiudadId        bson.ObjectId   `bson: "localidadId"`
 
 	db *mgo.Database
 }
@@ -60,6 +61,9 @@ func (s *Solicitud) MarshalJSON() ([]byte, error) {
 	type Alias Solicitud
 	var ciudad Localidad
 	var provincia Provincia
+	if s.db == nil {
+		return nil, fmt.Errorf("No db reference: %v", s.db)
+	}
 	s.db.C("provincias").FindId(s.ProvinciaId).One(&provincia)
 	s.db.C("localidades").FindId(s.CiudadId).One(&ciudad)
 	return json.Marshal(&struct {
