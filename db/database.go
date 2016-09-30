@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/flioh/DonemosApi/modelo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -37,6 +39,9 @@ func (db *Database) Create(m modelo.IModelo) error {
 }
 
 func (db *Database) Read(hexId string) (m modelo.IModelo, err error) {
+	if !bson.IsObjectIdHex(hexId) {
+		return nil, fmt.Errorf("hexId invalido %v", hexId)
+	}
 	objectId := bson.ObjectIdHex(hexId)
 	err = db.Colección().FindId(objectId).One(&m)
 
