@@ -23,8 +23,8 @@ type Solicitud struct {
 	Adicionales     string          `json:"datosAdicionales" bson:"datosAdicionales"`
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
-	ProvinciaId     bson.ObjectId   `bson: "provinciaId"`
-	CiudadId        bson.ObjectId   `bson: "localidadId"`
+	ProvinciaId     bson.ObjectId   `json:"provinciaId" bson:"provinciaId"`
+	CiudadId        bson.ObjectId   `json:"localidadId" bson:"localidadId"`
 
 	db *mgo.Database
 }

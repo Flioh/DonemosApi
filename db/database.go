@@ -27,7 +27,7 @@ func (db *Database) Colección() *mgo.Collection {
 
 func (db *Database) Find(limit int, query bson.M) *mgo.Query {
 
-	return db.Colección().Find(nil).Limit(limit)
+	return db.Colección().Find(query).Limit(limit)
 }
 
 func (db *Database) Create(m modelo.IModelo) error {

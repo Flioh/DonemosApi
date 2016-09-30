@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"gopkg.in/mgo.v2/bson"
 
@@ -33,11 +34,20 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	factorId := vars["factorId"]
 
 	var solicitudes modelo.Solicitudes
-	query := bson.M{
-		"provinciaId":        provinciaId,
-		"localidadId":        localidadId,
-		"grupoSanguineo.id":  grupoId,
-		"factorSanguineo.id": factorId,
+
+	var query bson.M = make(bson.M)
+	if provinciaId != "" && provinciaId != "null" {
+		query["provinciaId"] = bson.ObjectIdHex(provinciaId)
+	}
+	if localidadId != "" && localidadId != "null" {
+		fmt.Printf("localidadId: %v\n--\n", localidadId)
+		query["localidadId"] = bson.ObjectIdHex(localidadId)
+	}
+	if grupoId != "" && grupoId != "null" {
+		query["grupoSanguineo.id"], _ = strconv.Atoi(grupoId)
+	}
+	if factorId != "" && factorId != "null" {
+		query["factorSanguineo.id"], _ = strconv.Atoi(factorId)
 	}
 
 	c.db.Find(20, query).All(&solicitudes)
