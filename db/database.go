@@ -25,9 +25,9 @@ func (db *Database) Colección() *mgo.Collection {
 	return db.sesión.DB("donemos").C(db.nombreColección)
 }
 
-func (db *Database) Find(limit int, query bson.M) *mgo.Query {
+func (db *Database) Find(query bson.M) *Query {
 
-	return db.Colección().Find(query).Limit(limit)
+	return NewQuery(db.Colección().Find(query).Sort("fechaCreacion"))
 }
 
 func (db *Database) Create(m modelo.IModelo) error {

@@ -32,6 +32,7 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	localidadId := vars["localidadId"]
 	grupoId := vars["grupoId"]
 	factorId := vars["factorId"]
+	página, errorPágina := strconv.Atoi(vars["pag"])
 
 	var solicitudes modelo.Solicitudes
 
@@ -50,7 +51,12 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 		query["factorSanguineo.id"], _ = strconv.Atoi(factorId)
 	}
 
-	c.db.Find(20, query).All(&solicitudes)
+	q := c.db.Find(query)
+
+	if errorPágina == nil {
+		q.Paginar(página)
+	}
+	q.All(&solicitudes)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
