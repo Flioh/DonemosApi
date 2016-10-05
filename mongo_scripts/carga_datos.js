@@ -4,6 +4,9 @@ var db = conn.getDB("donemos");
 var localidadesC = db.getCollection("localidades");
 var provincias  = db.getCollection("provincias");
 
+localidadesC.drop();
+provincias.drop();
+
 var json = JSON.parse(cat(`${pwd()}/mongo_scripts/provincias_con_localidades.json`));
 
 
