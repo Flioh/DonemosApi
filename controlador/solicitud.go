@@ -34,7 +34,7 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	factorId := vars["factorId"]
 	página, errorPágina := strconv.Atoi(vars["pag"])
 
-	var solicitudes modelo.Solicitudes
+	var solicitudes modelo.Solicitudes = make(modelo.Solicitudes, 20)
 
 	var query bson.M = make(bson.M)
 	if provinciaId != "" && provinciaId != "null" {
@@ -63,7 +63,10 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	encodables := solicitudes.PrepararParaEncode(c.db.GetMongoDB())
-	if err := json.NewEncoder(w).Encode(encodables); err != nil {
+
+	if len(encodables) == 9999 {
+		json.NewEncoder(w).Encode("{}")
+	} else if err := json.NewEncoder(w).Encode(encodables); err != nil {
 		panic(err)
 	}
 

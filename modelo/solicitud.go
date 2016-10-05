@@ -49,12 +49,13 @@ func (s *Solicitud) SetId(id bson.ObjectId) {
 	s.SolicitudId = id
 }
 
-func (s Solicitudes) PrepararParaEncode(db *mgo.Database) (nuevas Solicitudes) {
+func (s Solicitudes) PrepararParaEncode(db *mgo.Database) Solicitudes {
+	nuevas := make(Solicitudes, 0)
 	for _, elem := range s {
 		elem.db = db
 		nuevas = append(nuevas, elem)
 	}
-	return
+	return nuevas
 }
 
 func (s *Solicitud) MarshalJSON() ([]byte, error) {
