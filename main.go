@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"gopkg.in/mgo.v2"
 
@@ -23,7 +24,15 @@ func main() {
 }
 
 func getSession() *mgo.Session {
-	s, err := mgo.Dial("mongodb://localhost")
+	mongoUrl := os.Getenv("MONGO_URL")
+
+	if mongoUrl == "" {
+		// TODO:
+		fmt.Println("Variable de entorno 'MONGO_URL' no proporcionada. Usando localhost")
+		mongoUrl = "mongodb://localhost"
+	}
+
+	s, err := mgo.Dial(mongoUrl)
 
 	if err != nil {
 		panic(err)
