@@ -17,7 +17,7 @@ Back-end para la app Donemos.
 | GET       | /solicitud| []Solicitud | Todas las solicitudes|
 | GET       | /solicitud/{número_de_página} | []Solicitud | Solicitudes correspondiente a `número_de_página`
 | GET       | /solicitud/filtrar/{provinciaID}/{localidadID}/{grupoID}/{factorID} | []Solicitud | Busca solicitudes que tengan los atributos dados, pasar `null` en un atributo para ignorar ese atributo.
-| GET  | /solicitud/{número_de_página/filtrar/{provinciaID}/{localidadID}/{grupoID}/{factorID} | []Solicitud | Paginación para el filtro solicitado.
+| GET  | /solicitud/{número_de_página}/filtrar/{provinciaID}/{localidadID}/{grupoID}/{factorID} | []Solicitud | Paginación para el filtro solicitado.
 | POST | /solicitud | En Error: 422, Creada: 201 | Solicita agregar la solicitud enviada a la base de datos.
 | GET | /solicitud/{solicitudID} | Solicitud | La solicitud solicitada por id.
 | PUT | /solicitud/{solicitudID} | Solicitud | Reemplaza la solicitud con id `solicitudID` por la enviada.
@@ -30,4 +30,3 @@ Back-end para la app Donemos.
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
 | GET       | /localidad/{provinciaID}| []Localidad | Todas las localidades de la provincia con id `provinciaID`|
-
