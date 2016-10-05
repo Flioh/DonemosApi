@@ -27,7 +27,7 @@ func (db *Database) Colección() *mgo.Collection {
 
 func (db *Database) Find(query bson.M) *Query {
 
-	return NewQuery(db.Colección().Find(query).Sort("fechaCreacion"))
+	return NewQuery(db.Colección().Find(query).Sort("-_id"))
 }
 
 func (db *Database) Create(m modelo.IModelo) error {
