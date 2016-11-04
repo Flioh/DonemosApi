@@ -11,7 +11,7 @@ func NewQuery(q *mgo.Query) *Query {
 }
 
 func (q *Query) Paginar(página int) *Query {
-	por_página := 2
+	por_página := 8
 	q.Skip((página - 1) * por_página).Limit(por_página)
 	return q
 }

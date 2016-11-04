@@ -17,14 +17,14 @@ func New(controladorSolicitud *controlador.Solicitud,
 		var handler http.Handler
 		handler = helper.Logger(ruta.Handler, ruta.Nombre)
 
-		route := router.
+		rutaMux := router.
 			Methods(ruta.Metodo).
 			Name(ruta.Nombre).
 			Path(ruta.Patron).
 			Handler(handler)
 
 		if ruta.Patron == "POST" || ruta.Patron == "PUT" {
-			route.Headers("Content-Type", "application/json")
+			rutaMux.Headers("Content-Type", "application/json")
 		}
 	}
 
