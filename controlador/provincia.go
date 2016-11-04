@@ -3,6 +3,7 @@ package controlador
 import (
 	"encoding/json"
 	"net/http"
+	"sort"
 
 	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/modelo"
@@ -22,6 +23,8 @@ func (c *Provincia) ProvinciaIndex(w http.ResponseWriter, r *http.Request) {
 
 	var provincias modelo.Provincias
 	c.db.Find(nil).All(&provincias)
+
+	sort.Sort(provincias)
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
