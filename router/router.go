@@ -29,21 +29,21 @@ func New(controladorSolicitud *controlador.Solicitud,
 			rutaMux.Headers("Content-Type", "application/json")
 		}
 
-		if ruta.Seguro {
-			jwtMiddleware := jwtm.New(jwtm.Options{
-				ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-					return []byte("Secret"), nil
-				},
-				SigningMethod: jwt.SigningMethodHS256,
-			})
-			authMiddleware := negroni.New(
-				negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
-				negroni.Wrap(loggingHandler),
-			)
-			rutaMux.Handler(authMiddleware)
-		} else {
-			rutaMux.Handler(loggingHandler)
-		}
+		//if ruta.Seguro {
+		//	jwtMiddleware := jwtm.New(jwtm.Options{
+		//		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
+		//			return []byte("Secret"), nil
+		//		},
+		//		SigningMethod: jwt.SigningMethodHS256,
+		//	})
+		//	authMiddleware := negroni.New(
+		//		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
+		//		negroni.Wrap(loggingHandler),
+		//	)
+		//	rutaMux.Handler(authMiddleware)
+		//} else {
+		//	rutaMux.Handler(loggingHandler)
+		//}
 	}
 
 	return router
