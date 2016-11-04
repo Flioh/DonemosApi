@@ -10,6 +10,7 @@ type Ruta struct {
 	Nombre  string
 	Metodo  string
 	Patron  string
+	Seguro  bool
 	Handler http.HandlerFunc
 }
 type Rutas []Ruta
@@ -17,51 +18,66 @@ type Rutas []Ruta
 func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controlador.Localidad) Rutas {
 	return Rutas{
 		Ruta{
+			"Ping",
+			"GET",
+			"/ping",
+			true,
+			cs.Ping,
+		},
+		Ruta{
 			"Index",
 			"GET",
 			"/solicitud",
+			false,
 			cs.SolicitudIndex,
 		},
-		Ruta{
+		Ruta{ // Solicitudes paginadas
 			"Index",
 			"GET",
 			"/solicitud/{pag}",
+			false,
 			cs.SolicitudIndex,
 		},
-		Ruta{
+		Ruta{ // Filtro de solicitudes
 			"SolicitudIndex",
 			"GET",
 			"/solicitud/filtrar/{provinciaId}/{localidadId}/{grupoId}/{factorId}",
+			false,
 			cs.SolicitudIndex,
 		},
-		Ruta{
+		Ruta{ // Solicitudes filtradas y paginadas
 			"SolicitudIndex",
 			"GET",
 			"/solicitud/{pag}/filtrar/{provinciaId}/{localidadId}/{grupoId}/{factorId}",
+			false,
 			cs.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudCreate",
 			"POST",
 			"/solicitud",
+			true,
 			cs.SolicitudCreate,
 		},
 		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
+			false,
 			cs.SolicitudShow,
 		},
 		Ruta{
 			"SolicitudUpdate",
 			"PUT",
 			"/solicitud/{solicitudId}",
+			true,
 			cs.SolicitudUpdate,
 		},
 		Ruta{
 			"SolicitudDelete",
 			"DELETE",
 			"/solicitud/{solicitudId}",
+			true,
 			cs.SolicitudDelete,
 		},
 
@@ -69,6 +85,7 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			"ProvinciaIndex",
 			"GET",
 			"/provincia",
+			false,
 			cp.ProvinciaIndex,
 		},
 
@@ -76,6 +93,7 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			"LocalidadIndex",
 			"GET",
 			"/localidad/{provinciaId}",
+			false,
 			cl.LocalidadIndex,
 		},
 	}

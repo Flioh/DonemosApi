@@ -162,3 +162,7 @@ func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(202)
 }
+
+func (c *Solicitud) Ping(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Ping success")
+}
