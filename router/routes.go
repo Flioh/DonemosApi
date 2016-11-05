@@ -54,7 +54,7 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 		},
 		Ruta{
 			"SolicitudCreate",
-			"POST",
+			"OPTIONS",
 			"/solicitud",
 			true,
 			cs.SolicitudCreate,
