@@ -94,9 +94,9 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 
 func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("CREATE METHOD")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	//w.Header().Set("Access-Control-Allow-Origin", "*")
+	//w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
+	//w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 
 	s := new(modelo.Solicitud)
 

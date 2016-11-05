@@ -24,7 +24,6 @@ func New(controladorSolicitud *controlador.Solicitud,
 			Handler(handler)
 
 		if ruta.Patron == "POST" || ruta.Patron == "PUT" || ruta.Patron == "OPTIONS" {
-			fmt.Println(ruta.Patron)
 			rutaMux.Headers("Content-Type", "application/json")
 			rutaMux.Headers("Access-Control-Allow-Origin", "*")
 			rutaMux.Headers("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
