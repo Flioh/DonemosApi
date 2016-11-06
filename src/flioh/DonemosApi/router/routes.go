@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/flioh/DonemosApi/controlador"
+	"flioh/DonemosApi/controlador"
 )
 
 type Ruta struct {

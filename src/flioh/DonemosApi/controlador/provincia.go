@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"sort"
 
-	"github.com/flioh/DonemosApi/db"
-	"github.com/flioh/DonemosApi/modelo"
+	"flioh/DonemosApi/db"
+	"flioh/DonemosApi/modelo"
 )
 
 // Provincia es el controlador de provincias, contiene referencia a la sesion de mongodb

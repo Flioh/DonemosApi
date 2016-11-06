@@ -6,8 +6,8 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/flioh/DonemosApi/db"
-	"github.com/flioh/DonemosApi/modelo"
+	"flioh/DonemosApi/db"
+	"flioh/DonemosApi/modelo"
 	"github.com/gorilla/mux"
 )
 

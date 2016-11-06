@@ -1,5 +1,6 @@
 gin-bin
 .idea
-src
+src/*
+!src/flioh
 pkg
 bin

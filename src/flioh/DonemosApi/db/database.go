@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/flioh/DonemosApi/modelo"
+	"flioh/DonemosApi/modelo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
