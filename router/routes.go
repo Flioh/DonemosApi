@@ -67,6 +67,13 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			cs.SolicitudPreflight,
 		},
 		Ruta{
+			"SolicitudPreflightCheck",
+			"OPTIONS",
+			"/solicitud/{solicitudId}",
+			false,
+			cs.SolicitudPreflight,
+		},
+		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
