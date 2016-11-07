@@ -113,13 +113,12 @@ func GetRutas(r *Router) Rutas {
 			false,
 			r.controladorLocalidad.LocalidadIndex,
 		},
-
-		// Ruta{
-		// 	"BancosProvincia",
-		// 	"GET",
-		// 	"/bancos/{provinciaId}",
-		// 	false,
-		// 	cb.BancoIndex,
-		// }
+		Ruta{
+			"BancoProvincia",
+			"GET",
+			"/banco/{provinciaId}",
+			false,
+			r.controladorBanco.BancoIndex,
+		},
 	}
 }

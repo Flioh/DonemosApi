@@ -20,6 +20,7 @@ type Router struct {
 	controladorSolicitud *controlador.Solicitud
 	controladorProvincia *controlador.Provincia
 	controladorLocalidad *controlador.Localidad
+	controladorBanco     *controlador.Banco
 }
 
 func (r Router) SubRouterPrefijo(prefijo string) *Router {
@@ -29,7 +30,8 @@ func (r Router) SubRouterPrefijo(prefijo string) *Router {
 
 func NewRouter(controladorSolicitud *controlador.Solicitud,
 	controladorProvincia *controlador.Provincia,
-	controladorLocalidad *controlador.Localidad) *Router {
+	controladorLocalidad *controlador.Localidad,
+	controladorBanco *controlador.Banco) *Router {
 	muxRouter := mux.NewRouter().StrictSlash(true)
 
 	router := &Router{
@@ -38,6 +40,7 @@ func NewRouter(controladorSolicitud *controlador.Solicitud,
 		controladorSolicitud,
 		controladorProvincia,
 		controladorLocalidad,
+		controladorBanco,
 	}
 
 	agregarRutas(router)
