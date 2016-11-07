@@ -1,10 +1,6 @@
 package router
 
-import (
-	"net/http"
-
-	"github.com/flioh/DonemosApi/controlador"
-)
+import "net/http"
 
 type Ruta struct {
 	Nombre  string
@@ -15,91 +11,91 @@ type Ruta struct {
 }
 type Rutas []Ruta
 
-func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controlador.Localidad) Rutas {
+func GetRutas(r *Router) Rutas {
 	return Rutas{
 		Ruta{
 			"Ping",
 			"GET",
 			"/ping",
-			true,
-			cs.Ping,
+			false,
+			r.controladorSolicitud.Ping,
 		},
 		Ruta{
 			"Index",
 			"GET",
 			"/solicitud",
 			false,
-			cs.SolicitudIndex,
+			r.controladorSolicitud.SolicitudIndex,
 		},
 		Ruta{ // Solicitudes paginadas
 			"Index",
 			"GET",
 			"/solicitud/{pag}",
 			false,
-			cs.SolicitudIndex,
+			r.controladorSolicitud.SolicitudIndex,
 		},
 		Ruta{ // Filtro de solicitudes
 			"SolicitudIndex",
 			"GET",
 			"/solicitud/filtrar/{provinciaId}/{localidadId}/{grupoId}/{factorId}",
 			false,
-			cs.SolicitudIndex,
+			r.controladorSolicitud.SolicitudIndex,
 		},
 		Ruta{ // Solicitudes filtradas y paginadas
 			"SolicitudIndex",
 			"GET",
 			"/solicitud/{pag}/filtrar/{provinciaId}/{localidadId}/{grupoId}/{factorId}",
 			false,
-			cs.SolicitudIndex,
+			r.controladorSolicitud.SolicitudIndex,
 		},
 		Ruta{
 			"SolicitudUsuario",
 			"GET",
 			"/solicitud/usuario/{usuarioId}",
 			false,
-			cs.SolicitudUsuario,
+			r.controladorSolicitud.SolicitudUsuario,
 		},
 		Ruta{
 			"SolicitudCreate",
 			"POST",
 			"/solicitud",
 			true,
-			cs.SolicitudCreate,
+			r.controladorSolicitud.SolicitudCreate,
 		},
 		Ruta{
 			"SolicitudPreflightCheck",
 			"OPTIONS",
 			"/solicitud",
 			false,
-			cs.SolicitudPreflight,
+			r.controladorSolicitud.SolicitudPreflight,
 		},
 		Ruta{
 			"SolicitudPreflightCheck",
 			"OPTIONS",
 			"/solicitud/{solicitudId}",
 			false,
-			cs.SolicitudPreflight,
+			r.controladorSolicitud.SolicitudPreflight,
 		},
 		Ruta{
 			"SolicitudShow",
 			"GET",
 			"/solicitud/{solicitudId}",
 			false,
-			cs.SolicitudShow,
+			r.controladorSolicitud.SolicitudShow,
 		},
 		Ruta{
 			"SolicitudUpdate",
 			"PUT",
 			"/solicitud/{solicitudId}",
 			true,
-			cs.SolicitudUpdate,
+			r.controladorSolicitud.SolicitudUpdate,
 		},
 		Ruta{
 			"SolicitudDelete",
 			"DELETE",
 			"/solicitud/{solicitudId}",
 			true,
-			cs.SolicitudDelete,
+			r.controladorSolicitud.SolicitudDelete,
 		},
 
 		Ruta{
@@ -107,7 +103,7 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			"GET",
 			"/provincia",
 			false,
-			cp.ProvinciaIndex,
+			r.controladorProvincia.ProvinciaIndex,
 		},
 
 		Ruta{
@@ -115,7 +111,15 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			"GET",
 			"/localidad/{provinciaId}",
 			false,
-			cl.LocalidadIndex,
+			r.controladorLocalidad.LocalidadIndex,
 		},
+
+		// Ruta{
+		// 	"BancosProvincia",
+		// 	"GET",
+		// 	"/bancos/{provinciaId}",
+		// 	false,
+		// 	cb.BancoIndex,
+		// }
 	}
 }

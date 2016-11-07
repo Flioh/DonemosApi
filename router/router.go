@@ -14,29 +14,44 @@ import (
 	"github.com/urfave/negroni"
 )
 
-func New(controladorSolicitud *controlador.Solicitud,
-	controladorProvincia *controlador.Provincia,
-	controladorLocalidad *controlador.Localidad) *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
+type Router struct {
+	*mux.Router
 
-	agregarRutas(router, controladorSolicitud, controladorProvincia, controladorLocalidad)
-	agregarRutasV1(router.PathPrefix("/v1").Subrouter(), controladorSolicitud, controladorProvincia, controladorLocalidad)
+	controladorSolicitud *controlador.Solicitud
+	controladorProvincia *controlador.Provincia
+	controladorLocalidad *controlador.Localidad
+}
+
+func (r Router) SubRouterPrefijo(prefijo string) *Router {
+	r.Router = r.PathPrefix(prefijo).Subrouter()
+	return &r
+}
+
+func NewRouter(controladorSolicitud *controlador.Solicitud,
+	controladorProvincia *controlador.Provincia,
+	controladorLocalidad *controlador.Localidad) *Router {
+	muxRouter := mux.NewRouter().StrictSlash(true)
+
+	router := &Router{
+		muxRouter,
+
+		controladorSolicitud,
+		controladorProvincia,
+		controladorLocalidad,
+	}
+
+	agregarRutas(router)
+	agregarRutasV1(router.SubRouterPrefijo("/v1"))
 
 	return router
 }
 
-func agregarRutasV1(router *mux.Router, controladorSolicitud *controlador.Solicitud,
-	controladorProvincia *controlador.Provincia,
-	controladorLocalidad *controlador.Localidad) {
-	agregarRutas(router, controladorSolicitud, controladorProvincia, controladorLocalidad)
+func agregarRutasV1(router *Router) {
+	agregarRutas(router)
 }
 
-func agregarRutas(router *mux.Router, controladorSolicitud *controlador.Solicitud,
-	controladorProvincia *controlador.Provincia,
-	controladorLocalidad *controlador.Localidad) {
-	//router := mux.NewRouter().StrictSlash(true)
-
-	for _, ruta := range GetRutas(controladorSolicitud, controladorProvincia, controladorLocalidad) {
+func agregarRutas(router *Router) {
+	for _, ruta := range GetRutas(router) {
 		var loggingHandler http.Handler
 		loggingHandler = helper.Logger(ruta.Handler, ruta.Nombre)
 
