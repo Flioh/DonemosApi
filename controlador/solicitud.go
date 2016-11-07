@@ -178,6 +178,7 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["solicitudId"]
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	err := c.db.Delete(id)
 	if err != nil {

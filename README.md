@@ -4,6 +4,8 @@ Back-end para la app Donemos.
 
 ###Como usar
 
+0. Asegurate de tener el [Gopath configurado adecuadamente](https://golang.org/doc/code.html#Workspaces).
+
 1. Cloná.
 
 2. Ejecutá `go get`
