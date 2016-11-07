@@ -29,7 +29,7 @@ func New(controladorSolicitud *controlador.Solicitud,
 			setHeaders(rutaMux)
 		}
 
-		if ruta.Seguro {
+		if false && ruta.Seguro {
 			setJwtMiddleware(rutaMux, loggingHandler)
 		} else {
 			rutaMux.Handler(loggingHandler)
@@ -47,9 +47,6 @@ func setHeaders(rutaMux *mux.Route) {
 }
 
 func setJwtMiddleware(rutaMux *mux.Route, wrap http.Handler) {
-	if true {
-		return
-	}
 	jwtMiddleware := jwtm.New(jwtm.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 			return []byte("Secret"), nil
