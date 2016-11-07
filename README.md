@@ -21,7 +21,7 @@ Back-end para la app Donemos.
 
 **MONGO_URL**: La URL a la db de mongo, si no se proporciona se usa `mongodb://localhost`.
 
-**AUTH0_CLIENT_SECRET**: Llave para verificar JasonWebTokens.
+**AUTH0_CLIENT_SECRET**: Llave para verificar JsonWebTokens.
 
 
 
