@@ -94,7 +94,7 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 
 func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("CREATE METHOD")
-	//w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	//w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
 	//w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 
@@ -117,11 +117,14 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error: ", err)
 	}
 
-	sj, _ := json.Marshal(s)
+	//sj, _ := json.Marshal(s)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
-	fmt.Fprintf(w, "%s", sj)
+	s.PrepararParaEncode(c.db.GetMongoDB())
+	if err := json.NewEncoder(w).Encode(s); err != nil {
+		panic(err)
+	}
 }
 
 func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
@@ -164,6 +167,12 @@ func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(202)
+}
+
+func (c *Solicitud) SolicitudPreflight(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
+	w.WriteHeader(http.StatusOK)
 }
 
 func (c *Solicitud) Ping(w http.ResponseWriter, r *http.Request) {

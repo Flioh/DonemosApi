@@ -58,6 +58,10 @@ func (s Solicitudes) PrepararParaEncode(db *mgo.Database) Solicitudes {
 	return nuevas
 }
 
+func (s *Solicitud) PrepararParaEncode(db *mgo.Database) {
+	s.db = db
+}
+
 func (s *Solicitud) MarshalJSON() ([]byte, error) {
 	type Alias Solicitud
 	var ciudad Localidad
