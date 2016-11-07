@@ -1,7 +1,10 @@
 package router
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"net/http"
+	"os"
 
 	jwtm "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -46,7 +49,7 @@ func agregarRutas(router *mux.Router, controladorSolicitud *controlador.Solicitu
 			setHeaders(rutaMux)
 		}
 
-		if false && ruta.Seguro {
+		if ruta.Seguro {
 			setJwtMiddleware(rutaMux, loggingHandler)
 		} else {
 			rutaMux.Handler(loggingHandler)
@@ -64,7 +67,20 @@ func setHeaders(rutaMux *mux.Route) {
 func setJwtMiddleware(rutaMux *mux.Route, wrap http.Handler) {
 	jwtMiddleware := jwtm.New(jwtm.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			return []byte("Secret"), nil
+			decoded, err := base64.URLEncoding.DecodeString(os.Getenv("AUTH0_CLIENT_SECRET"))
+			if err != nil {
+				return nil, err
+			}
+			return decoded, nil
+		},
+		ErrorHandler: func(w http.ResponseWriter, r *http.Request, authErr string) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(401)
+			err := map[string]interface{}{"error": authErr}
+			if err := json.NewEncoder(w).Encode(err); err != nil {
+				panic(err)
+			}
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})

@@ -10,9 +10,20 @@ Back-end para la app Donemos.
 
 2. Ejecutá `go get`
 
-3. Ejecutá `mongod`.
+3. Verifica que usas las variables de entorno requeridas, documentadas abajo.
 
-4. Usá [Gin](https://github.com/codegangsta/gin) para live-reload o simplemente `go run main.go` para ejecutar el servidor.
+4. Ejecutá `mongod`.
+
+5. Usá [Gin](https://github.com/codegangsta/gin) para live-reload o simplemente `go run main.go` para ejecutar el servidor.
+
+
+#### Variables de entorno
+
+**MONGO_URL**: La URL a la db de mongo, si no se proporciona se usa `mongodb://localhost`.
+
+**AUTH0_CLIENT_SECRET**: Llave para verificar JasonWebTokens.
+
+
 
 ### API
 
