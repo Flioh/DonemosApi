@@ -64,12 +64,28 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 
 	encodables := solicitudes.PrepararParaEncode(c.db.GetMongoDB())
 
-	if len(encodables) == 9999 {
-		json.NewEncoder(w).Encode("{}")
-	} else if err := json.NewEncoder(w).Encode(encodables); err != nil {
+	if err := json.NewEncoder(w).Encode(encodables); err != nil {
 		panic(err)
 	}
 
+}
+
+func (c *Solicitud) SolicitudUsuario(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["usuarioId"]
+
+	var query = bson.M{"usuarioID": id}
+	var solicitudes modelo.Solicitudes = make(modelo.Solicitudes, 5)
+
+	q := c.db.Find(query)
+	q.All(&solicitudes)
+
+	encodables := solicitudes.PrepararParaEncode(c.db.GetMongoDB())
+
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(encodables); err != nil {
+		panic(err)
+	}
 }
 
 func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {

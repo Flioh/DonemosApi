@@ -53,6 +53,13 @@ func GetRutas(cs *controlador.Solicitud, cp *controlador.Provincia, cl *controla
 			cs.SolicitudIndex,
 		},
 		Ruta{
+			"SolicitudUsuario",
+			"GET",
+			"/solicitud/usuario/{usuarioId}",
+			false,
+			cs.SolicitudUsuario,
+		},
+		Ruta{
 			"SolicitudCreate",
 			"POST",
 			"/solicitud",

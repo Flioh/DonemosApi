@@ -17,6 +17,7 @@ Back-end para la app Donemos.
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
 | GET       | /solicitud| []Solicitud | Todas las solicitudes|
+| GET       | /solicitud/usuario/{usuarioID} | []Solicitud | Solicitues del usuario dado. |
 | GET       | /solicitud/{número_de_página} | []Solicitud | Solicitudes correspondiente a `número_de_página`
 | GET       | /solicitud/filtrar/{provinciaID}/{localidadID}/{grupoID}/{factorID} | []Solicitud | Busca solicitudes que tengan los atributos dados, pasar `null` en un atributo para ignorar ese atributo.
 | GET  | /solicitud/{número_de_página}/filtrar/{provinciaID}/{localidadID}/{grupoID}/{factorID} | []Solicitud | Paginación para el filtro solicitado.
