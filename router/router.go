@@ -16,6 +16,23 @@ func New(controladorSolicitud *controlador.Solicitud,
 	controladorLocalidad *controlador.Localidad) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 
+	agregarRutas(router, controladorSolicitud, controladorProvincia, controladorLocalidad)
+	agregarRutasV1(router.PathPrefix("/v1").Subrouter(), controladorSolicitud, controladorProvincia, controladorLocalidad)
+
+	return router
+}
+
+func agregarRutasV1(router *mux.Router, controladorSolicitud *controlador.Solicitud,
+	controladorProvincia *controlador.Provincia,
+	controladorLocalidad *controlador.Localidad) {
+	agregarRutas(router, controladorSolicitud, controladorProvincia, controladorLocalidad)
+}
+
+func agregarRutas(router *mux.Router, controladorSolicitud *controlador.Solicitud,
+	controladorProvincia *controlador.Provincia,
+	controladorLocalidad *controlador.Localidad) {
+	//router := mux.NewRouter().StrictSlash(true)
+
 	for _, ruta := range GetRutas(controladorSolicitud, controladorProvincia, controladorLocalidad) {
 		var loggingHandler http.Handler
 		loggingHandler = helper.Logger(ruta.Handler, ruta.Nombre)
@@ -35,8 +52,6 @@ func New(controladorSolicitud *controlador.Solicitud,
 			rutaMux.Handler(loggingHandler)
 		}
 	}
-
-	return router
 }
 
 func setHeaders(rutaMux *mux.Route) {
