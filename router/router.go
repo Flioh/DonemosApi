@@ -2,8 +2,8 @@ package router
 
 import (
 	"net/http"
-	"flioh/DonemosApi/controlador"
-	"flioh/DonemosApi/helper"
+	"github.com/flioh/DonemosApi/controlador"
+	"github.com/flioh/DonemosApi/helper"
 	"github.com/gorilla/mux"
 )
 
@@ -44,8 +44,8 @@ import (
 	"fmt"
 	jwtm "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
-	"flioh/DonemosApi/controlador"
-	"flioh/DonemosApi/helper"
+	"github.com/flioh/DonemosApi/controlador"
+	"github.com/flioh/DonemosApi/helper"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )

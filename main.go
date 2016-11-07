@@ -8,9 +8,9 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"flioh/DonemosApi/controlador"
-	"flioh/DonemosApi/db"
-	"flioh/DonemosApi/router"
+	"github.com/flioh/DonemosApi/controlador"
+	"github.com/flioh/DonemosApi/db"
+	"github.com/flioh/DonemosApi/router"
 )
 
 func main() {
@@ -19,8 +19,8 @@ func main() {
 	controladorSolicitudes := controlador.NewSolicitud(db.NewDatabase(sesión, "solicitudes"))
 	controladorProvincias := controlador.NewProvincia(db.NewDatabase(sesión, "provincias"))
 	controladorLocalidades := controlador.NewLocalidad(db.NewDatabase(sesión, "localidades"))
-	routerHttp := router.New(controladorSolicitudes, controladorProvincias, controladorLocalidades)
-	log.Fatal(http.ListenAndServe(":8080", routerHttp))
+	router := router.New(controladorSolicitudes, controladorProvincias, controladorLocalidades)
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 func getSession() *mgo.Session {
