@@ -57,15 +57,7 @@ func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 	} else {
 
 		var bancos modelo.Bancos
-		q := c.db.Find(bson.M{
-			"loc": bson.M{
-				"$near": bson.M{
-					"$geometry":    bson.M{"type": "Point", "coordinates": []float64{lon, lat}},
-					"$minDistance": 0,
-					"$maxDistance": rango,
-				},
-			},
-		})
+		q := c.db.FindNear(lat, lon, rango)
 		q.All(&bancos)
 		response["bancos"] = bancos
 	}

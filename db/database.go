@@ -30,6 +30,20 @@ func (db *Database) Find(query bson.M) *Query {
 	return NewQuery(db.Colección().Find(query).Sort("-_id"))
 }
 
+func (db *Database) FindNear(lat, lon float64, rango float64) *Query {
+	return NewQuery(db.Colección().Find(
+		bson.M{
+			"loc": bson.M{
+				"$near": bson.M{
+					"$geometry":    bson.M{"type": "Point", "coordinates": []float64{lon, lat}},
+					"$minDistance": 0,
+					"$maxDistance": rango,
+				},
+			},
+		},
+	))
+}
+
 func (db *Database) Create(m modelo.IModelo) error {
 	id := bson.NewObjectId()
 	m.SetId(id)
