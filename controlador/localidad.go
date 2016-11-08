@@ -7,6 +7,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/flioh/DonemosApi/db"
+	"github.com/flioh/DonemosApi/helper"
 	"github.com/flioh/DonemosApi/modelo"
 	"github.com/gorilla/mux"
 )
@@ -24,6 +25,10 @@ func NewLocalidad(db *db.Database) *Localidad {
 func (c *Localidad) LocalidadIndex(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["provinciaId"]
+
+	if !helper.IdValido(w, id) {
+		return
+	}
 
 	var localidades modelo.Localidades
 	err := c.db.Colección().Find(bson.M{"provinciaId": bson.ObjectIdHex(id)}).All(&localidades)

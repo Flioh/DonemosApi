@@ -11,6 +11,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/flioh/DonemosApi/db"
+	"github.com/flioh/DonemosApi/helper"
 	"github.com/flioh/DonemosApi/modelo"
 	"github.com/gorilla/mux"
 )
@@ -38,10 +39,15 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 
 	var query bson.M = make(bson.M)
 	if provinciaId != "" && provinciaId != "null" {
+		if !helper.IdValido(w, provinciaId) {
+			return
+		}
 		query["provinciaId"] = bson.ObjectIdHex(provinciaId)
 	}
 	if localidadId != "" && localidadId != "null" {
-		fmt.Printf("localidadId: %v\n--\n", localidadId)
+		if !helper.IdValido(w, localidadId) {
+			return
+		}
 		query["localidadId"] = bson.ObjectIdHex(localidadId)
 	}
 	if grupoId != "" && grupoId != "null" {

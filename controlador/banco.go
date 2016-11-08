@@ -25,6 +25,10 @@ func (c *Banco) BancoIndex(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["provinciaId"]
 
+	if !helper.IdValido(w, id) {
+		return
+	}
+
 	var bancos modelo.Bancos
 	err := c.db.Colección().Find(bson.M{"provinciaId": bson.ObjectIdHex(id)}).All(&bancos)
 	if err != nil {
