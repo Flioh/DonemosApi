@@ -41,6 +41,11 @@ Back-end para la app Donemos.
 
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
+| GET       | /banco/{provinciaId}| []Banco | Todos los bancos dentro de provincia dada|
+| GET       | /banco/{lat}/{lon}/{rango} | []Banco | Todos los bancos dentro de `rango` metros desde coordenadas dadas. |
+
+| Método    | Patrón    |   Resultado | Descripción |
+|:----------|:----------|------------:|-------------|
 | GET       | /provincia| []Provincia | Todas las provincias|
 
 | Método    | Patrón    |   Resultado | Descripción |
