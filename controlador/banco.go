@@ -57,7 +57,7 @@ func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 	} else {
 
 		var bancos modelo.Bancos
-		q := c.db.FindNear(lat, lon, rango)
+		q := c.db.FindNear(lat, lon, rango).Limit(10)
 		q.All(&bancos)
 		response["bancos"] = bancos
 	}

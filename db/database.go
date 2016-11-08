@@ -30,7 +30,7 @@ func (db *Database) Find(query bson.M) *Query {
 	return NewQuery(db.Colección().Find(query).Sort("-_id"))
 }
 
-func (db *Database) FindNear(lat, lon float64, rango float64) *Query {
+func (db *Database) FindNear(lat, lon, rango float64) *Query {
 	return NewQuery(db.Colección().Find(
 		bson.M{
 			"loc": bson.M{
