@@ -27,6 +27,8 @@ Back-end para la app Donemos.
 
 ### API
 
+#### Solicitudes de dadores
+
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
 | GET       | /solicitud| []Solicitud | Todas las solicitudes|
@@ -39,14 +41,20 @@ Back-end para la app Donemos.
 | PUT | /solicitud/{solicitudID} | Solicitud | Reemplaza la solicitud con id `solicitudID` por la enviada.
 | DELETE | /solicitud/{solicitudID} | Eliminado: 202, No Encontrado: 204 | Elimina la solicitud con id `solicitudID`
 
+#### Bancos de sangre
+
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
 | GET       | /banco/{provinciaId}| []Banco | Todos los bancos dentro de provincia dada|
 | GET       | /banco/{lat}/{lon}/{rango} | []Banco | Todos los bancos dentro de `rango` metros desde coordenadas dadas. |
 
+#### Provincias
+
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
 | GET       | /provincia| []Provincia | Todas las provincias|
+
+#### Localidades
 
 | Método    | Patrón    |   Resultado | Descripción |
 |:----------|:----------|------------:|-------------|
