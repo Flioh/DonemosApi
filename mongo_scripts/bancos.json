@@ -3,8 +3,8 @@
   "nombreCiudad": "Ciudad Autonoma de Bs As",
   "institucion": "HOSPITAL ALVAREZ",
   "direccion": "Dr. Juan F. Aranguren 2701",
-  "lat": 34.6239367,
-  "lon": -58.4718664,
+  "lat": -31.452841,
+  "lon": -60.929787,
   "telefono": "TE 4611-6666 int. 2090 y 2950",
   "horario": "de lunes a viernes de 8.00 a 11 hs."
 },{
@@ -12,8 +12,8 @@
   "nombreCiudad": "Ciudad Autonoma de Bs As",
   "institucion": "Test HOSPITAL ALVAREZ",
   "direccion": "Test Dr. Juan F. Aranguren 2701",
-  "lat": 34.8239367,
-  "lon": -58.3718664,
+  "lat": -31.619785,
+  "lon": -60.708726,
   "telefono": "TEST 4611-6666 int. 2090 y 2950",
   "horario": "test de lunes a viernes de 8.00 a 11 hs."
 }]

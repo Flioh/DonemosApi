@@ -123,7 +123,7 @@ func GetRutas(r *Router) Rutas {
 		Ruta{
 			"BancoDistancia",
 			"GET",
-			"/banco/{lat1}/{lon1}/{rango}",
+			"/banco/{lat}/{lon}/{rango}",
 			false,
 			r.controladorBanco.BancoDistancia,
 		},

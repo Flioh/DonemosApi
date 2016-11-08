@@ -46,31 +46,28 @@ func (c *Banco) BancoIndex(w http.ResponseWriter, r *http.Request) {
 
 func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	lat1, lat1err := strconv.ParseFloat(vars["lat1"], 32)
-	lon1, lon1err := strconv.ParseFloat(vars["lon1"], 32)
+	lat, laterr := strconv.ParseFloat(vars["lat"], 32)
+	lon, lonerr := strconv.ParseFloat(vars["lon"], 32)
 
 	rango, rangoerr := strconv.ParseFloat(vars["rango"], 32)
 
 	response := make(map[string]interface{})
-	if lat1err != nil || lon1err != nil || rangoerr != nil {
-		response["error"] = "Invalid coordinates."
+	if laterr != nil || lonerr != nil || rangoerr != nil {
+		response["error"] = "Coordenadas invalidas"
 	} else {
 
 		var bancos modelo.Bancos
-		var bancosEnDistancia modelo.Bancos
-		q := c.db.Find(nil)
+		q := c.db.Find(bson.M{
+			"loc": bson.M{
+				"$near": bson.M{
+					"$geometry":    bson.M{"type": "Point", "coordinates": []float64{lon, lat}},
+					"$minDistance": 0,
+					"$maxDistance": rango,
+				},
+			},
+		})
 		q.All(&bancos)
-
-		for _, banco := range bancos {
-			lat2 := banco.Lat
-			lon2 := banco.Lon
-			distancia := helper.ObtenerDistancia(lat1, lon1, lat2, lon2)
-			if distancia <= rango {
-				bancosEnDistancia = append(bancosEnDistancia, banco)
-			}
-		}
-
-		response["bancos"] = bancosEnDistancia
+		response["bancos"] = bancos
 	}
 
 	if err := json.NewEncoder(w).Encode(response); err != nil {
