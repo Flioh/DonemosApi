@@ -2,9 +2,15 @@ package modelo
 
 import "gopkg.in/mgo.v2/bson"
 
+type Geo struct {
+	Kind  string    `json:"type" bson:"type"`
+	Point []float64 `json:"coordinates" bson:"coordinates"`
+}
+
 type Banco struct {
 	Id          bson.ObjectId `json:"id" bson:"_id"`
 	ProvinciaId bson.ObjectId `json:"provincia" bson:"provinciaId"`
+	Loc         Geo           `json:"loc" bson:"loc"`
 	Lat         float64       `json:"lat" bson:"lat"`
 	Lon         float64       `json:"lon" bson:"lon"`
 	Ciudad      string        `json:"ciudad" bson:"ciudad"`
@@ -17,11 +23,11 @@ type Banco struct {
 type Bancos []Banco
 
 func NewBanco(provinciaId bson.ObjectId,
-	lat, lon float64, ciudad, institución, dirección, teléfono, horario string) *Banco {
+	loc Geo, lat, lon float64, ciudad, institución, dirección, teléfono, horario string) *Banco {
 	return &Banco{
 		bson.NewObjectId(),
 		provinciaId,
-		lat, lon,
+		loc, lat, lon,
 		ciudad, institución, dirección, teléfono, horario,
 	}
 }

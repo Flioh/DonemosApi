@@ -51,7 +51,10 @@ for (var i = 0; i < json.length; i++) {
     direccion: banco.direccion,
     telefono: banco.telefono,
     horario: banco.horario,
+    loc: { type: "Point", coordinates: [ banco.lon, banco.lat ] },
     lat: banco.lat,
     lon: banco.lon
   });
 }
+
+bancos.createIndex( { loc: "2dsphere" } );
