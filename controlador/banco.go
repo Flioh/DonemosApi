@@ -45,19 +45,31 @@ func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 	lat1, lat1err := strconv.ParseFloat(vars["lat1"], 32)
 	lon1, lon1err := strconv.ParseFloat(vars["lon1"], 32)
 
-	lat2, lat2err := strconv.ParseFloat(vars["lat2"], 32)
-	lon2, lon2err := strconv.ParseFloat(vars["lon2"], 32)
-
 	rango, rangoerr := strconv.ParseFloat(vars["rango"], 32)
 
-	if lat1err != nil || lon1err != nil || lat2err != nil ||
-		lon2err != nil || rangoerr != nil {
-
+	response := make(map[string]interface{})
+	if lat1err != nil || lon1err != nil || rangoerr != nil {
+		response["error"] = "Invalid coordinates."
 	} else {
-		distancia := helper.ObtenerDistancia(lat1, lon1, lat2, lon2)
 
-		if distancia <= rango {
+		var bancos modelo.Bancos
+		var bancosEnDistancia modelo.Bancos
+		q := c.db.Find(nil)
+		q.All(&bancos)
 
+		for _, banco := range bancos {
+			lat2 := banco.Lat
+			lon2 := banco.Lon
+			distancia := helper.ObtenerDistancia(lat1, lon1, lat2, lon2)
+			if distancia <= rango {
+				bancosEnDistancia = append(bancosEnDistancia, banco)
+			}
 		}
+
+		response["bancos"] = bancosEnDistancia
+	}
+
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		panic(err)
 	}
 }
