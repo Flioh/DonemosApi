@@ -9,8 +9,9 @@ import (
 	"github.com/flioh/DonemosApi/modelo"
 )
 
-//const day = time.Hour * 24
-const day = time.Second * 4
+const day = time.Hour * 24
+
+//const day = time.Second * 4
 
 func EmpezarTaskLimpieza(db *db.Database) {
 	ticker := time.NewTicker(day)
@@ -31,9 +32,9 @@ func EmpezarTaskLimpieza(db *db.Database) {
 
 func limpiar(db *db.Database) {
 	ahora := time.Now()
-	haceUnMes := ahora.AddDate(0, 0, -1)
+	haceUnMes := ahora.AddDate(0, -1, 0)
 	query := db.Find(bson.M{
-		"fechaCreacion": bson.M{
+		"fecha": bson.M{
 			"$lt": haceUnMes,
 		},
 	})
@@ -41,5 +42,10 @@ func limpiar(db *db.Database) {
 	var solicitudesViejas modelo.Solicitudes
 
 	query.All(&solicitudesViejas)
-	//fmt.Printf("\nsolicViejas:\n%+v\n\n", solicitudesViejas)
+
+	for _, solicitud := range solicitudesViejas {
+		solicitud.Grupo = *modelo.NewGrupoSanguineo(-1, "Eliminado")
+		solicitud.Factor = *modelo.NewFactorSanguineo(-1, "Eliminado")
+		db.Update(solicitud.GetId().Hex(), &solicitud)
+	}
 }

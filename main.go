@@ -17,10 +17,10 @@ import (
 func main() {
 	fmt.Println("Iniciando servidor en puerto 8080")
 	sesión := getSession()
-	dbSolicitudes := db.NewDatabase(sesión, "localidades")
-	controladorSolicitudes := controlador.NewSolicitud(db.NewDatabase(sesión, "solicitudes"))
+	dbSolicitudes := db.NewDatabase(sesión, "solicitudes")
+	controladorSolicitudes := controlador.NewSolicitud(dbSolicitudes)
 	controladorProvincias := controlador.NewProvincia(db.NewDatabase(sesión, "provincias"))
-	controladorLocalidades := controlador.NewLocalidad(dbSolicitudes)
+	controladorLocalidades := controlador.NewLocalidad(db.NewDatabase(sesión, "localidades"))
 	controladorBancos := controlador.NewBanco(db.NewDatabase(sesión, "bancos"))
 	router := router.NewRouter(controladorSolicitudes,
 		controladorProvincias,
