@@ -11,19 +11,23 @@ import (
 	"github.com/flioh/DonemosApi/controlador"
 	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/router"
+	"github.com/flioh/DonemosApi/task"
 )
 
 func main() {
 	fmt.Println("Iniciando servidor en puerto 8080")
 	sesión := getSession()
+	dbSolicitudes := db.NewDatabase(sesión, "localidades")
 	controladorSolicitudes := controlador.NewSolicitud(db.NewDatabase(sesión, "solicitudes"))
 	controladorProvincias := controlador.NewProvincia(db.NewDatabase(sesión, "provincias"))
-	controladorLocalidades := controlador.NewLocalidad(db.NewDatabase(sesión, "localidades"))
+	controladorLocalidades := controlador.NewLocalidad(dbSolicitudes)
 	controladorBancos := controlador.NewBanco(db.NewDatabase(sesión, "bancos"))
 	router := router.NewRouter(controladorSolicitudes,
 		controladorProvincias,
 		controladorLocalidades,
 		controladorBancos)
+
+	task.EmpezarTaskLimpieza(dbSolicitudes)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
