@@ -1,7 +1,6 @@
 package task
 
 import (
-	"fmt"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -10,6 +9,7 @@ import (
 	"github.com/flioh/DonemosApi/modelo"
 )
 
+//const day = time.Hour * 24
 const day = time.Second * 4
 
 func EmpezarTaskLimpieza(db *db.Database) {
@@ -41,5 +41,5 @@ func limpiar(db *db.Database) {
 	var solicitudesViejas modelo.Solicitudes
 
 	query.All(&solicitudesViejas)
-	fmt.Printf("\nsolicViejas:\n%+v\n\n", solicitudesViejas)
+	//fmt.Printf("\nsolicViejas:\n%+v\n\n", solicitudesViejas)
 }

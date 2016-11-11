@@ -12,6 +12,7 @@ import (
 type Solicitud struct {
 	SolicitudId     bson.ObjectId   `json:"solicitudID" bson:"_id"`
 	UsuarioId       int             `json:"usuarioID" bson:"usuarioID"`
+	UsuarioDNI      int             `json:"usuarioDNI" bson:"usuarioDNI"`
 	Fecha           time.Time       `json:"fechaCreacion" bson:"fecha"`
 	Vigente         bool            `json:"estaVigente" bson:"estaVigente"`
 	CantidadDadores int             `json:"cantidadDadores" bson:"cantidadDadores"`
