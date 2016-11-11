@@ -12,11 +12,11 @@ import (
 type Solicitud struct {
 	SolicitudId     bson.ObjectId   `json:"solicitudID" bson:"_id"`
 	UsuarioId       int             `json:"usuarioID" bson:"usuarioID"`
-	UsuarioDNI      int             `json:"usuarioDNI" bson:"usuarioDNI"`
 	Fecha           time.Time       `json:"fechaCreacion" bson:"fecha"`
 	Vigente         bool            `json:"estaVigente" bson:"estaVigente"`
 	CantidadDadores int             `json:"cantidadDadores" bson:"cantidadDadores"`
 	NombrePaciente  string          `json:"nombrePaciente" bson:"nombrePaciente"`
+	DNIPaciente     int             `json:"pacienteDNI" bson:"pacienteDNI"`
 	Institucion     string          `json:"institucion" bson:"institucion"`
 	Direccion       string          `json:"direccion" bson:"direccion"`
 	HoraDesde       string          `json:"horaDesde" bson:"horaDesde"`

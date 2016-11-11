@@ -46,7 +46,6 @@ func (db *Database) FindNear(lat, lon, rango float64) *Query {
 
 func (db *Database) Create(m modelo.IModelo) error {
 	id := bson.NewObjectId()
-	fmt.Printf("GEN ID:%v\n", id)
 	m.SetId(id)
 	err := db.Colección().Insert(m)
 
