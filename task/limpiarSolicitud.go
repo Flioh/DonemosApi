@@ -44,8 +44,9 @@ func limpiar(db *db.Database) {
 	query.All(&solicitudesViejas)
 
 	for _, solicitud := range solicitudesViejas {
-		solicitud.Grupo = *modelo.NewGrupoSanguineo(-1, "Eliminado")
-		solicitud.Factor = *modelo.NewFactorSanguineo(-1, "Eliminado")
+		solicitud.TiposSanguineo = make([]modelo.TipoSanguineo, 0)
+		// solicitud.Grupo = *modelo.NewGrupoSanguineo(-1, "Eliminado")
+		// solicitud.Factor = *modelo.NewFactorSanguineo(-1, "Eliminado")
 		db.Update(solicitud.GetId().Hex(), &solicitud)
 	}
 }

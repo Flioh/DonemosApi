@@ -50,11 +50,9 @@ func (c *Solicitud) SolicitudIndex(w http.ResponseWriter, r *http.Request) {
 		}
 		query["localidadId"] = bson.ObjectIdHex(localidadId)
 	}
-	if grupoId != "" && grupoId != "null" {
-		query["grupoSanguineo.id"], _ = strconv.Atoi(grupoId)
-	}
-	if factorId != "" && factorId != "null" {
-		query["factorSanguineo.id"], _ = strconv.Atoi(factorId)
+	if (grupoId != "" && grupoId != "null") && (factorId != "" && factorId != "null") {
+		query["tiposSanguineos.grupoSanguineo.id"], _ = strconv.Atoi(grupoId)
+		query["tiposSanguineos.factorSanguineo.id"], _ = strconv.Atoi(factorId)
 	}
 
 	q := c.db.Find(query)

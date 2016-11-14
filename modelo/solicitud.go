@@ -10,22 +10,23 @@ import (
 )
 
 type Solicitud struct {
-	SolicitudId     bson.ObjectId   `json:"solicitudID" bson:"_id"`
-	UsuarioId       int             `json:"usuarioID" bson:"usuarioID"`
-	Fecha           time.Time       `json:"fechaCreacion" bson:"fecha"`
-	Vigente         bool            `json:"estaVigente" bson:"estaVigente"`
-	CantidadDadores int             `json:"cantidadDadores" bson:"cantidadDadores"`
-	NombrePaciente  string          `json:"nombrePaciente" bson:"nombrePaciente"`
-	DNIPaciente     int             `json:"pacienteDNI" bson:"pacienteDNI"`
-	Institucion     string          `json:"institucion" bson:"institucion"`
-	Direccion       string          `json:"direccion" bson:"direccion"`
-	HoraDesde       string          `json:"horaDesde" bson:"horaDesde"`
-	HoraHasta       string          `json:"horaHasta" bson:"horaHasta"`
-	Adicionales     string          `json:"datosAdicionales" bson:"datosAdicionales"`
-	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
-	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
-	ProvinciaId     bson.ObjectId   `json:"provinciaId" bson:"provinciaId"`
-	LocalidadId     bson.ObjectId   `json:"localidadId" bson:"localidadId"`
+	SolicitudId     bson.ObjectId `json:"solicitudID" bson:"_id"`
+	UsuarioId       int           `json:"usuarioID" bson:"usuarioID"`
+	Fecha           time.Time     `json:"fechaCreacion" bson:"fecha"`
+	Vigente         bool          `json:"estaVigente" bson:"estaVigente"`
+	CantidadDadores int           `json:"cantidadDadores" bson:"cantidadDadores"`
+	NombrePaciente  string        `json:"nombrePaciente" bson:"nombrePaciente"`
+	DNIPaciente     int           `json:"pacienteDNI" bson:"pacienteDNI"`
+	Institucion     string        `json:"institucion" bson:"institucion"`
+	Direccion       string        `json:"direccion" bson:"direccion"`
+	HoraDesde       string        `json:"horaDesde" bson:"horaDesde"`
+	HoraHasta       string        `json:"horaHasta" bson:"horaHasta"`
+	Adicionales     string        `json:"datosAdicionales" bson:"datosAdicionales"`
+	// Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
+	// Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
+	TiposSanguineo []TipoSanguineo `json:"tiposSanguineos" bson:"tiposSanguineos"`
+	ProvinciaId    bson.ObjectId   `json:"provinciaId" bson:"provinciaId"`
+	LocalidadId    bson.ObjectId   `json:"localidadId" bson:"localidadId"`
 
 	db *mgo.Database
 }
