@@ -11,7 +11,6 @@ import (
 	"github.com/flioh/DonemosApi/controlador"
 	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/router"
-	"github.com/flioh/DonemosApi/task"
 )
 
 func main() {
@@ -27,7 +26,7 @@ func main() {
 		controladorLocalidades,
 		controladorBancos)
 
-	task.EmpezarTaskLimpieza(dbSolicitudes)
+	//task.EmpezarTaskLimpieza(dbSolicitudes)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
