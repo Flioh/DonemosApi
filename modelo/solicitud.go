@@ -25,7 +25,7 @@ type Solicitud struct {
 	Grupo           GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
 	Factor          FactorSanguineo `json:"factorSanguineo" bson:"factorSanguineo"`
 	ProvinciaId     bson.ObjectId   `json:"provinciaId" bson:"provinciaId"`
-	CiudadId        bson.ObjectId   `json:"localidadId" bson:"localidadId"`
+	LocalidadId     bson.ObjectId   `json:"localidadId" bson:"localidadId"`
 
 	db *mgo.Database
 }
@@ -71,7 +71,7 @@ func (s *Solicitud) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("No db reference: %v", s.db)
 	}
 	s.db.C("provincias").FindId(s.ProvinciaId).One(&provincia)
-	s.db.C("localidades").FindId(s.CiudadId).One(&localidad)
+	s.db.C("localidades").FindId(s.LocalidadId).One(&localidad)
 	return json.Marshal(&struct {
 		Provincia Provincia `json:"provincia"`
 		Localidad Localidad `json:"localidad"`
@@ -96,6 +96,6 @@ func (s *Solicitud) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.ProvinciaId = aux.Provincia.Id
-	s.CiudadId = aux.Localidad.Id
+	s.LocalidadId = aux.Localidad.Id
 	return nil
 }
