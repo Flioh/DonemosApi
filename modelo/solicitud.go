@@ -65,20 +65,20 @@ func (s *Solicitud) PrepararParaEncode(db *mgo.Database) {
 
 func (s *Solicitud) MarshalJSON() ([]byte, error) {
 	type Alias Solicitud
-	var ciudad Localidad
+	var localidad Localidad
 	var provincia Provincia
 	if s.db == nil {
 		return nil, fmt.Errorf("No db reference: %v", s.db)
 	}
 	s.db.C("provincias").FindId(s.ProvinciaId).One(&provincia)
-	s.db.C("localidades").FindId(s.CiudadId).One(&ciudad)
+	s.db.C("localidades").FindId(s.CiudadId).One(&localidad)
 	return json.Marshal(&struct {
 		Provincia Provincia `json:"provincia"`
-		Localidad Localidad `json:"ciudad"`
+		Localidad Localidad `json:"localidad"`
 		*Alias
 	}{
 		Alias:     (*Alias)(s),
-		Localidad: ciudad,
+		Localidad: localidad,
 		Provincia: provincia,
 	})
 }
@@ -87,7 +87,7 @@ func (s *Solicitud) UnmarshalJSON(data []byte) error {
 	type Alias Solicitud
 	aux := &struct {
 		Provincia Provincia `json:"provincia"`
-		Localidad Localidad `json:"ciudad"`
+		Localidad Localidad `json:"localidad"`
 		*Alias
 	}{
 		Alias: (*Alias)(s),
