@@ -1,22 +1,20 @@
 package modelo
 
-type GrupoSanguineo struct {
-	Id     int    `json:"id"`
-	Nombre string `json:"nombre"`
-}
+type GrupoSanguineo int
 
-func NewGrupoSanguineo(id int, nombre string) *GrupoSanguineo {
-	return &GrupoSanguineo{id, nombre}
-}
+const (
+	Grupo0 GrupoSanguineo = iota
+	GrupoA
+	GrupoB
+	GrupoAB
+)
 
-type FactorSanguineo struct {
-	Id     int    `json:"id"`
-	Nombre string `json:"nombre"`
-}
+type FactorSanguineo int
 
-func NewFactorSanguineo(id int, nombre string) *FactorSanguineo {
-	return &FactorSanguineo{id, nombre}
-}
+const (
+	RhPos FactorSanguineo = iota
+	RhNeg
+)
 
 type TipoSanguineo struct {
 	GrupoSanguineo  GrupoSanguineo  `json:"grupoSanguineo" bson:"grupoSanguineo"`
