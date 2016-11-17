@@ -30,7 +30,7 @@ func (c *Banco) BancoIndex(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var bancos modelo.Bancos
-	err := c.db.Colección().Find(bson.M{"provinciaId": bson.ObjectIdHex(id)}).All(&bancos)
+	err := c.db.Colección().Find(bson.M{"provinciaId": bson.ObjectIdHex(id)}).Sort("ciudad").All(&bancos)
 	if err != nil {
 		panic(err)
 	}
