@@ -95,6 +95,7 @@ func setJwtMiddleware(rutaMux *mux.Route, wrap http.Handler) {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(401)
+
 			err := map[string]interface{}{"error": authErr}
 			if err := json.NewEncoder(w).Encode(err); err != nil {
 				panic(err)

@@ -22,7 +22,7 @@ func main() {
 
 	bugsnag.Configure(bugsnag.Configuration{
 		APIKey:       bugsnagApi,
-		ReleaseStage: "production",
+		ReleaseStage: "development",
 	})
 
 	sesión := getSession()
