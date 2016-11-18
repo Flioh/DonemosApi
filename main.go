@@ -21,7 +21,8 @@ func main() {
 	bugsnagApi := os.Getenv("BUGSNAG_API_KEY")
 
 	bugsnag.Configure(bugsnag.Configuration{
-		APIKey: bugsnagApi,
+		APIKey:       bugsnagApi,
+		ReleaseStage: "production",
 	})
 
 	sesión := getSession()
