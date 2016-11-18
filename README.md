@@ -23,6 +23,8 @@ Back-end para la app Donemos.
 
 **AUTH0_CLIENT_SECRET**: Llave para verificar JsonWebTokens.
 
+**BUGSNAG_API_KEY**: API Key de Bugsnag
+
 
 
 ### API

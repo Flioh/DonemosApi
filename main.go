@@ -8,6 +8,8 @@ import (
 
 	"gopkg.in/mgo.v2"
 
+	"github.com/bugsnag/bugsnag-go"
+
 	"github.com/flioh/DonemosApi/controlador"
 	"github.com/flioh/DonemosApi/db"
 	"github.com/flioh/DonemosApi/router"
@@ -15,6 +17,13 @@ import (
 
 func main() {
 	fmt.Println("Iniciando servidor en puerto 8080")
+
+	bugsnagApi := os.Getenv("BUGSNAG_API_KEY")
+
+	bugsnag.Configure(bugsnag.Configuration{
+		APIKey: bugsnagApi,
+	})
+
 	sesión := getSession()
 	dbSolicitudes := db.NewDatabase(sesión, "solicitudes")
 	controladorSolicitudes := controlador.NewSolicitud(dbSolicitudes)
@@ -27,7 +36,7 @@ func main() {
 		controladorBancos)
 
 	//task.EmpezarTaskLimpieza(dbSolicitudes)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8080", bugsnag.Handler(router)))
 }
 
 func getSession() *mgo.Session {
