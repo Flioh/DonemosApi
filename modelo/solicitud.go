@@ -11,7 +11,7 @@ import (
 
 type Solicitud struct {
 	SolicitudId     bson.ObjectId   `json:"solicitudID" bson:"_id"`
-	UsuarioId       int             `json:"usuarioID" bson:"usuarioID"`
+	UsuarioId       string          `json:"usuarioID" bson:"usuarioID"`
 	Fecha           time.Time       `json:"fechaCreacion" bson:"fecha"`
 	Vigente         bool            `json:"estaVigente" bson:"estaVigente"`
 	CantidadDadores int             `json:"cantidadDadores" bson:"cantidadDadores"`
@@ -54,6 +54,7 @@ func (s Solicitudes) PrepararParaEncode(db *mgo.Database) Solicitudes {
 		elem.db = db
 		nuevas = append(nuevas, elem)
 	}
+
 	return nuevas
 }
 
