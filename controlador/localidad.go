@@ -6,9 +6,9 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/flioh/DonemosApi/db"
-	"github.com/flioh/DonemosApi/helper"
-	"github.com/flioh/DonemosApi/modelo"
+	"github.com/Flioh/DonemosApi/db"
+	"github.com/Flioh/DonemosApi/helper"
+	"github.com/Flioh/DonemosApi/modelo"
 	"github.com/gorilla/mux"
 )
 

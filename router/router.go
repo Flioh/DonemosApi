@@ -8,8 +8,8 @@ import (
 
 	jwtm "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/flioh/DonemosApi/controlador"
-	"github.com/flioh/DonemosApi/helper"
+	"github.com/Flioh/DonemosApi/controlador"
+	"github.com/Flioh/DonemosApi/helper"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
