@@ -10,9 +10,9 @@ import (
 
 	"github.com/bugsnag/bugsnag-go"
 
-	"github.com/flioh/DonemosApi/controlador"
-	"github.com/flioh/DonemosApi/db"
-	"github.com/flioh/DonemosApi/router"
+	"github.com/Flioh/DonemosApi/controlador"
+	"github.com/Flioh/DonemosApi/db"
+	"github.com/Flioh/DonemosApi/router"
 )
 
 func main() {
