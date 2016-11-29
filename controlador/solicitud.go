@@ -199,7 +199,3 @@ func (c *Solicitud) SolicitudPreflight(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
 	w.WriteHeader(http.StatusOK)
 }
-
-func (c *Solicitud) Ping(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Ping success")
-}

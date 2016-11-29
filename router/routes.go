@@ -18,7 +18,14 @@ func GetRutas(r *Router) Rutas {
 			"GET",
 			"/ping",
 			false,
-			r.controladorSolicitud.Ping,
+			r.controladorPing.Ping,
+		},
+		Ruta{
+			"MongoPing",
+			"GET",
+			"/mongoping",
+			false,
+			r.controladorPing.Health,
 		},
 		Ruta{
 			"Index",

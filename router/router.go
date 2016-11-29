@@ -17,6 +17,7 @@ import (
 type Router struct {
 	*mux.Router
 
+	controladorPing      *controlador.Ping
 	controladorSolicitud *controlador.Solicitud
 	controladorProvincia *controlador.Provincia
 	controladorLocalidad *controlador.Localidad
@@ -28,7 +29,9 @@ func (r Router) SubRouterPrefijo(prefijo string) *Router {
 	return &r
 }
 
-func NewRouter(controladorSolicitud *controlador.Solicitud,
+func NewRouter(
+	controladorPing *controlador.Ping,
+	controladorSolicitud *controlador.Solicitud,
 	controladorProvincia *controlador.Provincia,
 	controladorLocalidad *controlador.Localidad,
 	controladorBanco *controlador.Banco) *Router {
@@ -37,6 +40,7 @@ func NewRouter(controladorSolicitud *controlador.Solicitud,
 	router := &Router{
 		muxRouter,
 
+		controladorPing,
 		controladorSolicitud,
 		controladorProvincia,
 		controladorLocalidad,

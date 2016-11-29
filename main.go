@@ -27,11 +27,14 @@ func main() {
 
 	sesión := getSession()
 	dbSolicitudes := db.NewDatabase(sesión, "solicitudes")
+	controladorPing := controlador.NewPing(sesión, dbSolicitudes)
 	controladorSolicitudes := controlador.NewSolicitud(dbSolicitudes)
 	controladorProvincias := controlador.NewProvincia(db.NewDatabase(sesión, "provincias"))
 	controladorLocalidades := controlador.NewLocalidad(db.NewDatabase(sesión, "localidades"))
 	controladorBancos := controlador.NewBanco(db.NewDatabase(sesión, "bancos"))
-	router := router.NewRouter(controladorSolicitudes,
+	router := router.NewRouter(
+		controladorPing,
+		controladorSolicitudes,
 		controladorProvincias,
 		controladorLocalidades,
 		controladorBancos)
