@@ -67,7 +67,7 @@ func agregarRutas(router *Router) {
 			Name(ruta.Nombre).
 			Path(ruta.Patron)
 
-		if ruta.Patron == "POST" || ruta.Patron == "PUT" || ruta.Patron == "OPTIONS" {
+		if ruta.Patron == "GET" || ruta.Patron == "POST" || ruta.Patron == "PUT" || ruta.Patron == "OPTIONS" {
 			setHeaders(rutaMux)
 		}
 
