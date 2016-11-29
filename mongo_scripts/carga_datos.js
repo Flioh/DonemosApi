@@ -16,10 +16,11 @@ for (var i = 0; i < json.length; i++) {
 
   var cantidadLocalidades = provincia.ciudades && provincia.ciudades.length ? provincia.ciudades.length : 0;
   var cantidadBancos = provincia.bancos && provincia.bancos.length ? provincia.bancos.length : 0;
-  printjson(provincia.nombre + ' | Localidades: ' + cantidadLocalidades + ' | Bancos de Sangre: ' + cantidadBancos);
   
   // Carga de provincias
   var provinciaId = ObjectId();
+  
+  printjson(provinciaId + ' | ' + provincia.nombre + ' | Localidades: ' + cantidadLocalidades + ' | Bancos de Sangre: ' + cantidadBancos);
   
   provinciasC.insert({
     _id: provinciaId,
@@ -78,10 +79,10 @@ function procesarString(texto){
 
 // Método que obtiene la latitud de un string de coordenadas
 function getLat(coordenadas) {
-  return coordenadas.replace(" ", "").split(",")[0];
+  return +(coordenadas.replace(" ", "").split(",")[0]);
 }
 
 // Método que obtiene la longitud de un string de coordenadas
 function getLon(coordenadas) {
-  return coordenadas.replace(" ", "").split(",")[1];
+  return +(coordenadas.replace(" ", "").split(",")[1]);
 }
