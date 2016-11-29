@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/flioh/DonemosApi/db"
+	"github.com/Flioh/DonemosApi/db"
 
 	mgo "gopkg.in/mgo.v2"
 )
