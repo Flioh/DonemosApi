@@ -20,7 +20,7 @@ type Banco struct {
 	Lat         float64       `json:"lat" bson:"lat"`
 	Lon         float64       `json:"lon" bson:"lon"`
 	Ciudad      string        `json:"ciudad" bson:"ciudad"`
-	Institución string        `json:"nombre" bson:"nombre"`
+	Institución string        `json:"institucion" bson:"institucion"`
 	Dirección   string        `json:"direccion" bson:"direccion"`
 	Teléfono    string        `json:"telefono" bson:"telefono"`
 	Horario     string        `json:"horario" bson:"horario"`
