@@ -38,7 +38,9 @@ func (c *Banco) BancoIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(bancos); err != nil {
+	encodables := bancos.PrepararParaEncode(c.db.GetMongoDB())
+
+	if err := json.NewEncoder(w).Encode(encodables); err != nil {
 		panic(err)
 	}
 
@@ -59,7 +61,8 @@ func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 		var bancos modelo.Bancos
 		q := c.db.FindNear(lat, lon, rango).Limit(10)
 		q.All(&bancos)
-		response["bancos"] = bancos
+		encodables := bancos.PrepararParaEncode(c.db.GetMongoDB())
+		response["bancos"] = encodables
 	}
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
