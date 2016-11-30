@@ -2,7 +2,7 @@
 
 Back-end para la app Donemos.
 
-###Como usar
+###Cómo usar
 
 0. Asegurate de tener el [Gopath configurado adecuadamente](https://golang.org/doc/code.html#Workspaces).
 
