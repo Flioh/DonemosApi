@@ -97,6 +97,8 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 	id := vars["solicitudId"]
 
 	fmt.Println("Buscando id: ", id)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	solicitud, err := c.db.Read(id)
 	if err != nil {
@@ -105,10 +107,6 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(solicitud); err != nil {
 		panic(err)
