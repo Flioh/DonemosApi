@@ -94,7 +94,7 @@ func (c *Solicitud) SolicitudUsuario(w http.ResponseWriter, r *http.Request) {
 
 func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["solicitudId"]
+	id := vars["usuarioId"]
 
 	fmt.Println("Buscando id: ", id)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
