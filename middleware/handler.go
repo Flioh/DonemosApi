@@ -3,7 +3,6 @@ package middleware
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,7 +13,6 @@ import (
 )
 
 func Headers(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	fmt.Println("HEADERS SHOULD BE SET RIGHT HERE RIGHT NOW !!!!")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
