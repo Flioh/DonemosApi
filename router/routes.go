@@ -9,6 +9,11 @@ type Ruta struct {
 	Seguro  bool
 	Handler http.HandlerFunc
 }
+
+func (ruta *Ruta) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ruta.Handler(w, r)
+}
+
 type Rutas []Ruta
 
 func GetRutas(r *Router) Rutas {

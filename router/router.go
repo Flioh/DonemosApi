@@ -1,15 +1,10 @@
 package router
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"net/http"
-	"os"
 
-	jwtm "github.com/auth0/go-jwt-middleware"
-	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/Flioh/DonemosApi/controlador"
-	"github.com/Flioh/DonemosApi/helper"
+	"github.com/Flioh/DonemosApi/middleware"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
@@ -59,54 +54,29 @@ func agregarRutasV1(router *Router) {
 
 func agregarRutas(router *Router) {
 	for _, ruta := range GetRutas(router) {
-		var loggingHandler http.Handler
-		loggingHandler = helper.Logger(ruta.Handler, ruta.Nombre)
+		// var loggingHandler http.Handler
+		// loggingHandler = helper.Logger(ruta.Handler, ruta.Nombre)
 
 		rutaMux := router.
 			Methods(ruta.Metodo).
 			Name(ruta.Nombre).
 			Path(ruta.Patron)
 
-		if ruta.Patron == "GET" || ruta.Patron == "POST" || ruta.Patron == "PUT" || ruta.Patron == "OPTIONS" {
-			setHeaders(rutaMux)
-		}
-
+		finalHandler := negroni.New(
+			negroni.HandlerFunc(middleware.Headers),
+			negroni.HandlerFunc(middleware.Logger),
+			negroni.Wrap(ruta.Handler),
+		)
 		if ruta.Seguro {
-			setJwtMiddleware(rutaMux, loggingHandler)
+			setJwtMiddleware(rutaMux, finalHandler)
 		} else {
-			rutaMux.Handler(loggingHandler)
+			rutaMux.Handler(finalHandler)
 		}
 	}
 }
 
-func setHeaders(rutaMux *mux.Route) {
-	rutaMux.Headers("Content-Type", "application/json")
-	rutaMux.Headers("Access-Control-Allow-Origin", "*")
-	rutaMux.Headers("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
-	rutaMux.Headers("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-}
-
 func setJwtMiddleware(rutaMux *mux.Route, wrap http.Handler) {
-	jwtMiddleware := jwtm.New(jwtm.Options{
-		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			decoded, err := base64.URLEncoding.DecodeString(os.Getenv("AUTH0_CLIENT_SECRET"))
-			if err != nil {
-				return nil, err
-			}
-			return decoded, nil
-		},
-		ErrorHandler: func(w http.ResponseWriter, r *http.Request, authErr string) {
-			w.Header().Set("Access-Control-Allow-Origin", "*")
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(401)
-
-			err := map[string]interface{}{"error": authErr}
-			if err := json.NewEncoder(w).Encode(err); err != nil {
-				panic(err)
-			}
-		},
-		SigningMethod: jwt.SigningMethodHS256,
-	})
+	jwtMiddleware := middleware.Jwt()
 	authMiddleware := negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
 		negroni.Wrap(wrap),
