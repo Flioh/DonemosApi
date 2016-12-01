@@ -34,8 +34,6 @@ func (c *Banco) BancoIndex(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
 	encodables := bancos.PrepararParaEncode(c.db.GetMongoDB())
@@ -65,8 +63,6 @@ func (c *Banco) BancoDistancia(w http.ResponseWriter, r *http.Request) {
 		response["bancos"] = encodables
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(response); err != nil {

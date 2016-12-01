@@ -97,8 +97,6 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 	id := vars["solicitudId"]
 
 	fmt.Println("Buscando id: ", id)
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	solicitud, err := c.db.Read(id)
 	if err != nil {
@@ -114,11 +112,6 @@ func (c *Solicitud) SolicitudShow(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("CREATE METHOD")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	//w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
-	//w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-
 	s := new(modelo.Solicitud)
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
@@ -128,7 +121,6 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 	r.Body.Close()
 
 	if err := json.Unmarshal(body, s); err != nil {
-		w.Header().Set("Content-Type", "application/json")
 		fmt.Println("error: ", err)
 		w.WriteHeader(422)
 		return
@@ -140,7 +132,6 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 
 	//sj, _ := json.Marshal(s)
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
 	s.PrepararParaEncode(c.db.GetMongoDB())
 	if err := json.NewEncoder(w).Encode(s); err != nil {
@@ -151,7 +142,6 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["solicitudId"]
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	nuevaSolicitud := new(modelo.Solicitud)
 
@@ -161,7 +151,6 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(body, &nuevaSolicitud); err != nil {
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(422)
 	}
 
@@ -172,7 +161,6 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 	r.Body.Close()
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	nuevaSolicitud.PrepararParaEncode(c.db.GetMongoDB())
 	if err := json.NewEncoder(w).Encode(nuevaSolicitud); err != nil {
@@ -183,7 +171,6 @@ func (c *Solicitud) SolicitudUpdate(w http.ResponseWriter, r *http.Request) {
 func (c *Solicitud) SolicitudDelete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["solicitudId"]
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	err := c.db.Delete(id)
 	if err != nil {
