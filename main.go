@@ -26,6 +26,7 @@ func main() {
 	})
 
 	sesión := getSession()
+	defer sesión.Close()
 	dbSolicitudes := db.NewDatabase(sesión, "solicitudes")
 	controladorPing := controlador.NewPing(sesión, dbSolicitudes)
 	controladorSolicitudes := controlador.NewSolicitud(dbSolicitudes)
