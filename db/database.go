@@ -19,15 +19,16 @@ func NewDatabase(sesión *mgo.Session, n string) *Database {
 }
 
 func (db *Database) GetMongoDB() *mgo.Database {
+	db.sesión.Refresh()
 	return db.sesión.DB("donemos")
 }
 
 func (db *Database) Colección() *mgo.Collection {
+	db.sesión.Refresh()
 	return db.sesión.DB("donemos").C(db.nombreColección)
 }
 
 func (db *Database) Find(query bson.M) *Query {
-
 	return NewQuery(db.Colección().Find(query).Sort("-_id"))
 }
 
