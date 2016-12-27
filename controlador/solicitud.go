@@ -13,6 +13,7 @@ import (
 	"github.com/Flioh/DonemosApi/db"
 	"github.com/Flioh/DonemosApi/helper"
 	"github.com/Flioh/DonemosApi/modelo"
+	bugsnag "github.com/bugsnag/bugsnag-go"
 	"github.com/gorilla/mux"
 )
 
@@ -121,13 +122,22 @@ func (c *Solicitud) SolicitudCreate(w http.ResponseWriter, r *http.Request) {
 	r.Body.Close()
 
 	if err := json.Unmarshal(body, s); err != nil {
-		fmt.Println("error: ", err)
+		fmt.Println("error en unmarshal: ", err)
+		bugsnag.Notify(err, bugsnag.MetaData{
+			"body": {
+				"data": string(body),
+			},
+		})
 		w.WriteHeader(422)
 		return
 	}
 
 	if err := c.db.Create(s); err != nil {
-		fmt.Println("error: ", err)
+		bugsnag.Notify(err, bugsnag.MetaData{
+			"model": {
+				"solicitud": s,
+			},
+		})
 	}
 
 	//sj, _ := json.Marshal(s)

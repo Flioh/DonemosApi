@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Flioh/DonemosApi/modelo"
+	bugsnag "github.com/bugsnag/bugsnag-go"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -49,6 +50,10 @@ func (db *Database) Create(m modelo.IModelo) error {
 	m.SetId(id)
 	err := db.Colección().Insert(m)
 
+	if err != nil {
+		fmt.Println("create error: ", err)
+	}
+
 	return err
 }
 
@@ -58,6 +63,11 @@ func (db *Database) Read(hexId string) (m modelo.IModelo, err error) {
 	}
 	objectId := bson.ObjectIdHex(hexId)
 	err = db.Colección().FindId(objectId).One(&m)
+
+	if err != nil {
+		fmt.Println("read error: ", err)
+		bugsnag.Notify(err)
+	}
 
 	return
 }
